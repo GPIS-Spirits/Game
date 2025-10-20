@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0c5addb67882349ae912a3502fbc70, type: 3}
+  m_Name: _testPathTile
+  m_EditorClassIdentifier: 
+  id: _path_000
+  tileName: Test Path Tile
+  tile: {fileID: 11400000, guid: 9483cfeb5372107469b1b6eed17c8b66, type: 2}
+  movementCost: 1
