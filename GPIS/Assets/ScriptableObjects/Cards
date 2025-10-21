@@ -1,0 +1,47 @@
+using UnityEngine;
+
+[CreateAssetMenu(
+    fileName = "NewCardDef",
+    menuName = "Cards/Card Definition",
+    order = 1)]
+public class CardDef : ScriptableObject
+{
+    [Header("Basic Info")]
+    public string cardName;
+    [TextArea] public string description;
+
+    [Header("Stats")]
+    public int cost;
+    public int power;
+    public int rarity; // 1 = Common, 2 = Rare, 3 = Epic, 4 = Legendary
+
+    [Header("Type & Effects")]
+    public ElementType elementType;
+    public CardEffectType effectType;
+
+    [Header("Deck Settings")]
+    public int deckLimit = 3; // how many of this card can be in one deck
+
+    [Header("Visuals")]
+    public Sprite cardArt;
+    public Color cardTint = Color.white;
+}
+
+public enum ElementType
+{
+    Fire,
+    Water,
+    Earth,
+    Air,
+    Light,
+    Dark
+}
+
+public enum CardEffectType
+{
+    Attack,
+    Heal,
+    Buff,
+    Debuff,
+    Passive
+}
