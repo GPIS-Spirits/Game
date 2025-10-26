@@ -10,13 +10,3 @@ public class EffectDef : ScriptableObject
 
     [TextArea] public string description;
 }
-
-public enum EffectType
-{
-    Damage,
-    Heal,
-    ApplyStatus,
-    DrawCard,
-    GainEnergy,
-    Shield
-}
