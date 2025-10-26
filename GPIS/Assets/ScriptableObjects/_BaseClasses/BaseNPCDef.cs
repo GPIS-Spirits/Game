@@ -1,18 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseNPCDef : MonoBehaviour
+public abstract class BaseNPCDef : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("NPC Info")]
+    public string npcID;
+    public string npcName;
+    public Sprite portrait;
+    public string description;
 }
