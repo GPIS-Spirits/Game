@@ -3,7 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // For is we decide to have visible Elemental Cards.
+using TMPro; // For if we decide to have visible Elemental Cards.
 
 public class ElementalDisplay : MonoBehaviour
 {
