@@ -7,7 +7,7 @@ using UnityEngine;
 public class ElementalCombat : MonoBehaviour
 {
     [SerializeField] private ElementalDisplay elementalDisplay;
-    public ElementalDef Def => elementalDisplay.elemental;
+    public ElementalDef Def => elementalDisplay.elemental; // Lambda Operator '=>' - Defines Lambda Expressions & Expression-Bodied Members (for defining short methods).
 
     void Awake()
     {

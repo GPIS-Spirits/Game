@@ -16,7 +16,7 @@ MonoBehaviour:
   npcName: Test Enemy
   portrait: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   description: Test Enemy
-  maxHealth: 15
+  maxHealth: 2
   attack: 1
   defense: 3
   maxElementals: 2

@@ -15,7 +15,7 @@ public class CardInteraction : MonoBehaviour
 
     public bool IsSelected { get; private set; } // "Auto-Implemented Get/Set" - C# shortcut that allows "IsSelected" to be accessed publicly, set privately.
 
-    public PlayableCardDisplay Display { get; private set; }
+    public PlayableCardDisplay Display { get; private set; } // Auot-Implemented Get/Set
 
     void Awake()
     {
@@ -25,27 +25,27 @@ public class CardInteraction : MonoBehaviour
 
     void Start()
     {
-        var hm = GetComponentInParent<HandManager>(); // Grabs 'HandManager' Parent of this card:
-        if (hm) hm.AddToHand(this);
+        var handManager = GetComponentInParent<HandManager>(); // Grabs 'HandManager' Parent of this card:
+        if (handManager) handManager.AddToHand(this);          // Adds this card to the List of 'handManager' if present:
         else Debug.LogWarning("CardInteraction: No HandManager found in parents.");
     }
 
     public void OnCardClicked()
     {
-        SetSelected(!IsSelected);
+        SetSelected(!IsSelected); // Call 'SetSelected' and pass it the opposite value of 'IsSelected':
     }
 
     // Enables/Disables card selection from the hand.
     public void SetSelected (bool selected)
     {
         IsSelected = selected;
-        if (selectionHighlight) selectionHighlight.enabled = selected;
+        if (selectionHighlight) selectionHighlight.enabled = selected; // Enables 'selectionHighlight' if the card it is attached to is selected:
     }
 
-    // Ensures card objects are properly removed from the 'HandManager' List.
+    // Ensures 'this' card object is properly removed from the 'HandManager' List.
     void OnDestroy()
     {
-        var hm = GetComponentInParent<HandManager>();
-        if (hm) hm.RemoveFromHand(this);
+        var handManager = GetComponentInParent<HandManager>();
+        if (handManager) handManager.RemoveFromHand(this);
     }
 }
