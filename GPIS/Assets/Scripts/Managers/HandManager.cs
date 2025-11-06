@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardHandler;
 
 public class HandManager : MonoBehaviour
 {
@@ -14,16 +15,39 @@ public class HandManager : MonoBehaviour
 
     public readonly List<CardInteraction> Hand = new(); // Dynamically Allocated List to hold all cards in the Player's hand (Explicitly set to 'readonly' mode).
 
+    [SerializeField] RectTransform Vertex;
+    public float offset = 4f;
+
+    void Awake()
+    {
+        CardHolder.Vertex = Vertex.position;
+    }
+
+    void Update()
+    {
+        // debug the offset for something confortable
+        CardHolder.padding = offset;
+        if (Hand.Count > 0) CardHolder.cards = Hand.ToArray();
+        CardHolder.HoldCards();
+    }
+
     // Use Predefined List Operations to add passed card to the Player's hand.
     public void AddToHand(CardInteraction card)
     {
-        if (!Hand.Contains(card)) Hand.Add(card);
+        if (!Hand.Contains(card))
+        {
+            Hand.Add(card);
+            CardHolder.cards = Hand.ToArray();
+            CardHolder.HoldCards();
+        }
     }
 
     // Use Predefined List Operations to remove passed card from the Player's hand.
     public void RemoveFromHand(CardInteraction card)
     {
         Hand.Remove(card);
+        CardHolder.cards = Hand.ToArray();
+        CardHolder.HoldCards();
     }
 
     // Iterates through selected cards to access them during resolve step.

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardHandler;
 
 public class PlayerDeck : MonoBehaviour
 {
@@ -10,6 +11,17 @@ public class PlayerDeck : MonoBehaviour
     private readonly List<PlayableCardDef> library = new(); // Draw Pile ("Library")
     private readonly List<PlayableCardDef> discard = new(); // Discard Pile
 
+    public RectTransform circle;
+    public float x = 0;
+
+
+    public void Update()
+    {
+        float y = CardHolder.CalculatePoint(x);
+
+        Vector3 pos = new Vector3(x, y, 0);
+        circle.position = pos + CardHolder.Vertex;
+    }
     void Awake()
     {
         BuildAndShuffle();
