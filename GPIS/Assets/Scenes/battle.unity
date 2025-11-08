@@ -1678,7 +1678,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 395361422112891981, guid: f54583f978da5dc4bacd39cbbff980be, type: 3}
   defaultOwnerElemental: {fileID: 109435358}
   Vertex: {fileID: 1830551215}
-  offset: 4
+  offset: 100
 --- !u!224 &1777082797
 RectTransform:
   m_ObjectHideFlags: 0
