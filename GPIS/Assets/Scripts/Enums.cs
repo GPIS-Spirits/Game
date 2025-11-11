@@ -1,5 +1,8 @@
 // Enum Definitions [ we can separate later ]
 
+using System;
+using UnityEngine;
+
 /// <summary>
 /// Used for Chests, Equipment, Cards, etc
 /// </summary>
@@ -101,4 +104,12 @@ public enum EffectType
     MultiHit,        // Repeats another effect N times
     Conditional,     // Gate an inner effect on a condition
     ModifyTurnMods   // Adjust turn-scoped modifiers (e.g., All Fire attack twice)
+}
+
+[Serializable]
+public struct Resist 
+{
+    public Element element;
+    [Range(0f, 1f)]
+    public float value;
 }
