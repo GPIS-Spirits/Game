@@ -12,14 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabf0213eb82c53418b8d657352b6145, type: 3}
   m_Name: fire_001
   m_EditorClassIdentifier: 
-  npcID: 
-  npcName: 
+  npcID: fire_001
+  npcName: Fire Elemental
   portrait: {fileID: 21300000, guid: 26928f85dd8c1f44cb1048f1424d51f1, type: 3}
-  description: 
+  description: Stacking burn effect.
   type: 0
   quality: 0
-  prefab: {fileID: 0}
-  baseHP: 0
-  baseDmg: 0
-  baseArmor: 0
-  resists: []
+  targeting: 2
+  prefab: {fileID: 5792472473243045728, guid: d7ac096a9108de94daffe8ad05686c89, type: 3}
+  baseHP: 15
+  baseDmg: 5
+  baseArmor: -2
+  resists:
+  - element: 0
+    percent: 15
+  - element: 1
+    percent: -15
+  - element: 2
+    percent: 5
+  - element: 5
+    percent: 10

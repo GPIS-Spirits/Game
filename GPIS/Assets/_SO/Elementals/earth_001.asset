@@ -12,14 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabf0213eb82c53418b8d657352b6145, type: 3}
   m_Name: earth_001
   m_EditorClassIdentifier: 
-  npcID: 
-  npcName: 
+  npcID: earth_001
+  npcName: Earth Elemental
   portrait: {fileID: 21300000, guid: 79e811ef579ac37478b3658f69504dc2, type: 3}
-  description: 
-  type: 0
+  description: Bolsters defense, stun count.
+  type: 2
   quality: 0
-  prefab: {fileID: 0}
-  baseHP: 0
-  baseDmg: 0
-  baseArmor: 0
-  resists: []
+  targeting: 7
+  prefab: {fileID: 6067693159031859327, guid: 08e02d3fb62408c4b9b11876ea768f20, type: 3}
+  baseHP: 25
+  baseDmg: 5
+  baseArmor: 5
+  resists:
+  - element: 2
+    percent: 20
+  - element: 4
+    percent: 10
+  - element: 5
+    percent: 10
+  - element: 0
+    percent: -10
+  - element: 1
+    percent: 10

@@ -16,10 +16,17 @@ MonoBehaviour:
   npcName: Air Elemental
   portrait: {fileID: 21300000, guid: b585d95d18f8e3c47b1607b0aa4eb80f, type: 3}
   description: Attacks shuffle enemy position.
-  type: 0
+  type: 3
   quality: 0
+  targeting: 6
   prefab: {fileID: 3262530900142809040, guid: 1a7edc7a37271284e97406d890c9152a, type: 3}
   baseHP: 15
-  baseDmg: 5
+  baseDmg: 10
   baseArmor: 0
-  resists: []
+  resists:
+  - element: 3
+    percent: 20
+  - element: 2
+    percent: 15
+  - element: 0
+    percent: -10

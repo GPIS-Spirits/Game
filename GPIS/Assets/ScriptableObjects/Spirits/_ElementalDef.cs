@@ -8,6 +8,7 @@ public class ElementalDef : BaseNPCDef
     [Header("Elemental Attributes")]
     public Element type = Element.Fire;
     public Quality quality = Quality.Common;            // sets multiplier to all stats
+    public TargetingMode targeting = TargetingMode.SingleEnemy;
 
     [Header("Prefab")]
     public GameObject prefab;

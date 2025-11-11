@@ -16,9 +16,23 @@ MonoBehaviour:
   npcName: Test Elemental
   portrait: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   description: Test Elemental
-  elementType: 0
+  type: 0
   quality: 2
-  dmgMult: 1
-  dmgFlat: 0
-  defMult: 1
-  defFlat: 0
+  targeting: 2
+  prefab: {fileID: 3171452937993347930, guid: a61ad24127787be4abc298d344f1595b, type: 3}
+  baseHP: 100
+  baseDmg: 100
+  baseArmor: 100
+  resists:
+  - element: 0
+    percent: 25
+  - element: 1
+    percent: 15
+  - element: 2
+    percent: 55
+  - element: 3
+    percent: -100
+  - element: 4
+    percent: -15
+  - element: 5
+    percent: 0

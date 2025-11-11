@@ -12,14 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabf0213eb82c53418b8d657352b6145, type: 3}
   m_Name: void_001
   m_EditorClassIdentifier: 
-  npcID: 
-  npcName: 
+  npcID: void_001
+  npcName: Void Elemental
   portrait: {fileID: 21300000, guid: 9324671103bf2814293aeff4fb3d65a5, type: 3}
-  description: 
-  type: 0
+  description: Attacks lowest HP with increasing damage dealt
+  type: 5
   quality: 0
-  prefab: {fileID: 0}
-  baseHP: 0
-  baseDmg: 0
-  baseArmor: 0
-  resists: []
+  targeting: 4
+  prefab: {fileID: 894717523418564271, guid: dab0ff435b5f56a46ad823144b707ba7, type: 3}
+  baseHP: 15
+  baseDmg: 15
+  baseArmor: -5
+  resists:
+  - element: 4
+    percent: -10
+  - element: 3
+    percent: 15
+  - element: 0
+    percent: -10
+  - element: 1
+    percent: -10
+  - element: 2
+    percent: 10

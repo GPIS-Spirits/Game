@@ -66,10 +66,11 @@ public enum TargetingMode
     Self,               // The player
     SingleEnemy,        // Select one enemy
     AllEnemies,         // Hits all enemies
-    AllyAny,            // Select an allied elemental
     LowestHpEnemy,      // Auto-picks enemy with lowest HP (not selectable)
     Multiple,           // Allows multiple selection
-    RandomEnemy         // Auto-picks a random enemy
+    RandomEnemy,         // Auto-picks a random enemy
+    AnySingle,
+    AnyAll
 }
 
 /// <summary>
@@ -110,6 +111,6 @@ public enum EffectType
 public struct Resist 
 {
     public Element element;
-    [Range(0f, 1f)]
-    public float value;
+    [Range(-100,100)]
+    public int percent;
 }
