@@ -54,7 +54,7 @@ public class HandManager : MonoBehaviour
     {
         if (card != null)
         {
-            var def = card.GetComponent<PlayableCardDisplay>()?.playableCard;
+            var def = card.GetComponent<PlayableCardDisplay>().playableCard;
             if (playerDeck && def) playerDeck.Discard(def);
 
             RemoveFromHand(card);
