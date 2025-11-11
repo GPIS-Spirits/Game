@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: _testGoalTile
   m_EditorClassIdentifier: 
   id: _goal_000
-  tileName: Test Goal Tile
-  tile: {fileID: 11400000, guid: 3328a34ff59f7d9469ec5d523a025bb2, type: 2}
+  displayName: 
+  description: 
+  sprite: {fileID: 21300000, guid: 6f0cef559d9a8bb47be11c1f0f0f77ae, type: 3}
   choices: 0

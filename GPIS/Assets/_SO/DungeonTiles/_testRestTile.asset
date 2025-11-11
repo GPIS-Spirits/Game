@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: _testRestTile
   m_EditorClassIdentifier: 
   id: _rest_000
-  tileName: Test Rest Tile
-  tile: {fileID: 11400000, guid: 75e4ebdba49dd28428deec537469643e, type: 2}
+  displayName: 
+  description: 
+  sprite: {fileID: 21300000, guid: ac666babca4cb3e46bf6feb5b7ed3eaf, type: 3}
   restChoices: 0

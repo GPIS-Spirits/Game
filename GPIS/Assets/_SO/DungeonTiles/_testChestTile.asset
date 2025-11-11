@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: _testChestTile
   m_EditorClassIdentifier: 
   id: _chest_000
-  tileName: Test Chest
-  tile: {fileID: 11400000, guid: 1a23b5addb47c4d45b50551a456de9fb, type: 2}
+  displayName: 
+  description: 
+  sprite: {fileID: 21300000, guid: f2059a5730bbe164585ab6aaf933d741, type: 3}
   quality: 0
