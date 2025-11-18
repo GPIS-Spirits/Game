@@ -11,7 +11,7 @@ public class PlayerDeck : MonoBehaviour
     private readonly List<PlayableCardDef> library = new(); // Draw Pile ("Library")
     private readonly List<PlayableCardDef> discard = new(); // Discard Pile
 
-    public RectTransform circle;
+    //public RectTransform circle;
     public float x = 0;
 
 
@@ -20,7 +20,7 @@ public class PlayerDeck : MonoBehaviour
         float y = CardHolder.CalculatePoint(x);
 
         Vector3 pos = new Vector3(x, y, 0);
-        circle.position = pos + CardHolder.Vertex;
+        //circle.position = pos + CardHolder.Vertex;
     }
     void Awake()
     {

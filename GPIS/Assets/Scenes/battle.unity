@@ -634,7 +634,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 65de830c44661614ba10a62c01855229, type: 2}
   - {fileID: 11400000, guid: 65de830c44661614ba10a62c01855229, type: 2}
   - {fileID: 11400000, guid: 65de830c44661614ba10a62c01855229, type: 2}
-  circle: {fileID: 1626356460}
   x: 0
 --- !u!1 &519420028
 GameObject:
@@ -1678,7 +1677,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 3797838216001157498, guid: 37c8153341b3bfe44a4af2b91dbe1368, type: 3}
   defaultOwnerElemental: {fileID: 109435358}
   Vertex: {fileID: 1830551215}
-  padding: 120
+  padding: 70
   curveStrength: 0.025
   offset: 100
   moveSpeed: 15
