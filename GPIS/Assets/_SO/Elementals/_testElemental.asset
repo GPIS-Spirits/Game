@@ -19,6 +19,6 @@ MonoBehaviour:
   elementType: 0
   quality: 2
   dmgMult: 1
-  dmgFlat: 0
+  dmgFlat: 1
   defMult: 1
   defFlat: 0
