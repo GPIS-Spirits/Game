@@ -7283,6 +7283,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 5, y: 5, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 21
+      m_TileSpriteIndex: 21
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 6, y: 5, z: 0}
     second:
       serializedVersion: 2
@@ -9967,7 +9977,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: bf37463060defe542a3604b5b9daf62c, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: f7f0b67cb55c891489d90e16058b6d0a, type: 2}
-  - m_RefCount: 393
+  - m_RefCount: 394
     m_Data: {fileID: 11400000, guid: ae145c79680c8c148886452896082f34, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 14
@@ -10012,10 +10022,10 @@ Tilemap:
     m_Data: {fileID: -1795184119, guid: 8f2a280d83dc4c349932be7ad76575d5, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -193927955, guid: 8f2a280d83dc4c349932be7ad76575d5, type: 3}
-  - m_RefCount: 393
+  - m_RefCount: 394
     m_Data: {fileID: 1448572596, guid: 8f2a280d83dc4c349932be7ad76575d5, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 971
+  - m_RefCount: 972
     m_Data:
       e00: 1
       e01: 0
@@ -10034,7 +10044,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 971
+  - m_RefCount: 972
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -10651,11 +10661,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8488484717090775543, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8488484717090775543, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
       value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 8488484717090775543, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
