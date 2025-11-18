@@ -1415,7 +1415,7 @@ RectTransform:
   - {fileID: 34549750}
   - {fileID: 941434413}
   - {fileID: 1626356460}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1426549337}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1453,6 +1453,7 @@ Transform:
   m_Children:
   - {fileID: 109435355}
   - {fileID: 611442357}
+  - {fileID: 1327022414}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1618460286
@@ -1677,7 +1678,11 @@ MonoBehaviour:
   cardPrefab: {fileID: 3797838216001157498, guid: 37c8153341b3bfe44a4af2b91dbe1368, type: 3}
   defaultOwnerElemental: {fileID: 109435358}
   Vertex: {fileID: 1830551215}
+  padding: 120
+  curveStrength: 0.025
   offset: 100
+  moveSpeed: 15
+  rotateSpeed: 12
 --- !u!224 &1777082797
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1751,5 +1756,4 @@ SceneRoots:
   - {fileID: 1308782069}
   - {fileID: 456229068}
   - {fileID: 1426549337}
-  - {fileID: 1327022414}
   - {fileID: 1652560724}

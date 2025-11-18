@@ -85,6 +85,13 @@ public class HandManager : MonoBehaviour
         if (!Hand.Contains(card))
         {
             Hand.Add(card);
+
+            // Ensures correct visual layer ordering (left = bottom, right = top)
+            card.transform.SetSiblingIndex(Hand.Count - 1);
+
+            // Debug for the cards being added with the right index
+            Debug.Log($"[HandManager] Added card '{card.name}' at sibling index {card.transform.GetSiblingIndex()} (Hand count: {Hand.Count})");
+
             // immediately compute targets so it animates in
             UpdateCardTargets();
         }
@@ -95,6 +102,20 @@ public class HandManager : MonoBehaviour
         if (card == null) return;
         if (Hand.Remove(card))
         {
+            // Ensure there is no gaps and is left-to-right bottom-to-top for stacking
+            for (int i = 0; i < Hand.Count; i++)
+            {
+                Hand[i].transform.SetSiblingIndex(i);
+            }
+
+            // Show the order after removal
+            //Debug.Log("[HandManager] Current sibling order after removal:");
+            //for (int i = 0; i < Hand.Count; i++)
+            //{
+            //    Debug.Log($"   Card {Hand[i].name} -> sibling {Hand[i].transform.GetSiblingIndex()}");
+            //}
+
+            // Recalculate positions on the curve
             UpdateCardTargets();
         }
     }
