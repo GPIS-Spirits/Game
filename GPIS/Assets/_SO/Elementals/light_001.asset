@@ -21,8 +21,9 @@ MonoBehaviour:
   targeting: 8
   prefab: {fileID: 7189896033632946014, guid: 0280fc06bb0e13f4abc0faba3b3a87d6, type: 3}
   baseHP: 25
-  baseDmg: -10
+  baseDmg: 10
   baseArmor: 2
+  effectStrength: 5
   resists:
   - element: 5
     percent: 25

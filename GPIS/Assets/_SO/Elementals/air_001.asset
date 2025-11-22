@@ -23,6 +23,7 @@ MonoBehaviour:
   baseHP: 15
   baseDmg: 10
   baseArmor: 0
+  effectStrength: 10
   resists:
   - element: 3
     percent: 20

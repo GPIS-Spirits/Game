@@ -22,7 +22,8 @@ MonoBehaviour:
   prefab: {fileID: 6067693159031859327, guid: 08e02d3fb62408c4b9b11876ea768f20, type: 3}
   baseHP: 25
   baseDmg: 5
-  baseArmor: 5
+  baseArmor: 10
+  effectStrength: 7
   resists:
   - element: 2
     percent: 20

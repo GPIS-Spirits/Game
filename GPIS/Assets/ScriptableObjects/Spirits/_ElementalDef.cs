@@ -7,7 +7,6 @@ public class ElementalDef : BaseNPCDef
 {
     [Header("Elemental Attributes")]
     public Element type = Element.Fire;
-    public Quality quality = Quality.Common;            // sets multiplier to all stats
     public TargetingMode targeting = TargetingMode.SingleEnemy;
 
     [Header("Prefab")]
@@ -17,5 +16,6 @@ public class ElementalDef : BaseNPCDef
     public int baseHP;                                  // adds to players
     public int baseDmg;                                 // for spirit attacks
     public int baseArmor;                               // adds to players
+    public int effectStrength;
     public List<Resist> resists;                        // each added to players
 }
