@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f9b99b93b235045b01e26428d8a93e, type: 3}
+  m_Name: DefaultMeldinCard
+  m_EditorClassIdentifier: 
+  cardName: Meldin
+  hp: 10
+  attack: 1
+  typeImage: {fileID: 21300000, guid: ac666babca4cb3e46bf6feb5b7ed3eaf, type: 3}
+  spriteImage: {fileID: 21300000, guid: 70b6d9ac6e215d34fbe3d4aa08f3ec6e, type: 3}
+  description: This is Meldin
+  flavorText: I F#*&$@ YOUR MOM!

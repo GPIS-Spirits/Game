@@ -1,0 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TurnManager : MonoBehaviour
+{
+    public enum Phase { Player, Enemy }
+    public Phase CurrentPhase { get; private set; } = Phase.Player;
+
+    [Header("Game Object Wiring")]
+    public CombatManager combatManager;
+    public PlayerCombat player;
+    public PlayerDeck playerDeck;
+    public HandManager handManager;
+
+    [Header("Turn Settings")]
+    public int startingHandSize = 5;
+    public int drawPerPlayerTurn = 1;
+
+    void Start()
+    {
+        DrawStep(startingHandSize);
+    }
+
+    public void OnEndTurnPressed()
+    {
+        if (CurrentPhase != Phase.Player) return; // Don't let the player end the turn if it isn't their turn:
+
+        StartEnemyTurn();
+        Debug.Log("Enemy Turn Started.");
+    }
+
+    private void StartEnemyTurn()
+    {
+        CurrentPhase = Phase.Enemy;
+
+        // --- Enemy AI Decision Tree implementation would go here, but simple attack for now! ---
+        if (combatManager && combatManager.activeEnemy)
+        {
+            combatManager.activeEnemy.PerformAttack(player);
+        }
+
+        StartPlayerTurn(); // Switch the turn back to the Player after enemy attacks:
+    }
+
+    private void StartPlayerTurn()
+    {
+        CurrentPhase = Phase.Player;
+        DrawStep(drawPerPlayerTurn);
+        Debug.Log("Player Turn Started.");
+    }
+
+    private void DrawStep(int n)
+    {
+        if (!playerDeck || !handManager || n <= 0) return;
+
+        var buffer = new List<PlayableCardDef>();
+        int drawn = playerDeck.TryDraw(n, buffer);
+
+        for (int i = 0; i < drawn; i++)
+        {
+            handManager.SpawnCard(buffer[i]);
+        }
+    }
+}
