@@ -15,5 +15,6 @@ MonoBehaviour:
   id: _goal_000
   displayName: 
   description: 
-  sprite: {fileID: 21300000, guid: 6f0cef559d9a8bb47be11c1f0f0f77ae, type: 3}
+  sprite: {fileID: 21300000, guid: 36055b8defac3a24798cc6f7856b33e5, type: 3}
+  overlay: {fileID: 21300000, guid: 4bedf9e3582055b43bf43175ae7fcdcf, type: 3}
   choices: 0

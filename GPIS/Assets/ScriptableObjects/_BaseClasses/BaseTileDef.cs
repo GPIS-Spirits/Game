@@ -13,4 +13,5 @@ public abstract class BaseTileDef : ScriptableObject
 
     [Header("Art")]
     public Sprite sprite;
+    public Sprite overlay;
 }
