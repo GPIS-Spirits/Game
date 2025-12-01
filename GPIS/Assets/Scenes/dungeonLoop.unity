@@ -366,7 +366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 668817620}
-  - component: {fileID: 668817619}
+  - component: {fileID: 668817621}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -374,40 +374,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &668817619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 668817618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09b023aa2485ff7499b0902abb093556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileCount: 10
-  tileSpacing: 4
-  tilePrefab: {fileID: 6152598965363058177, guid: 9b02dee70c5084546b1fcf9ee7d971fc, type: 3}
-  doStartTileLogic: 1
-  startTileDef: {fileID: 11400000, guid: c60462f4d0f7f924a811641e7d9906a6, type: 2}
-  goalTileDef: {fileID: 11400000, guid: 74a829e342b2f0b409739cc22285c171, type: 2}
-  middleTileDef:
-  - {fileID: 11400000, guid: 3ee641da627efe04d9e9cc047a9c1128, type: 2}
-  - {fileID: 11400000, guid: 38fd6495fab0ca742aff25ad15399425, type: 2}
-  - {fileID: 11400000, guid: 47fa8ab813c39ab4780de802b7d81477, type: 2}
-  - {fileID: 11400000, guid: d218cf50445713846b99ff5edc574748, type: 2}
-  - {fileID: 11400000, guid: 3ee641da627efe04d9e9cc047a9c1128, type: 2}
-  - {fileID: 11400000, guid: 47fa8ab813c39ab4780de802b7d81477, type: 2}
-  - {fileID: 11400000, guid: 47fa8ab813c39ab4780de802b7d81477, type: 2}
-  playerMarker: {fileID: 707614613}
-  startIndex: 0
-  jumpDuration: 0.45
-  jumpHeight: 3.2
-  idleYOffset: 0.5
-  _currentIndex: 0
-  _isJumping: 0
-  _baseScale: {x: 1, y: 1, z: 1}
 --- !u!4 &668817620
 Transform:
   m_ObjectHideFlags: 0
@@ -423,6 +389,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &668817621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668817618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c90c8d4308fdf49bc58fdcab7232fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileCount: 15
+  tileSpacing: 4
+  tilePrefab: {fileID: 6152598965363058177, guid: 9b02dee70c5084546b1fcf9ee7d971fc, type: 3}
+  doStartTileLogic: 1
+  startTileDef: {fileID: 11400000, guid: c60462f4d0f7f924a811641e7d9906a6, type: 2}
+  goalTileDef: {fileID: 11400000, guid: 74a829e342b2f0b409739cc22285c171, type: 2}
+  middleTileDef:
+  - {fileID: 11400000, guid: 3ee641da627efe04d9e9cc047a9c1128, type: 2}
+  - {fileID: 11400000, guid: 38fd6495fab0ca742aff25ad15399425, type: 2}
+  - {fileID: 11400000, guid: 3ee641da627efe04d9e9cc047a9c1128, type: 2}
+  - {fileID: 11400000, guid: 47fa8ab813c39ab4780de802b7d81477, type: 2}
+  - {fileID: 11400000, guid: 47fa8ab813c39ab4780de802b7d81477, type: 2}
+  - {fileID: 11400000, guid: d218cf50445713846b99ff5edc574748, type: 2}
+  - {fileID: 11400000, guid: 47fa8ab813c39ab4780de802b7d81477, type: 2}
+  playerMarker: {fileID: 707614613}
+  startIndex: 0
+  jumpDuration: 0.45
+  jumpHeight: 3.2
+  idleYOffset: 0.5
 --- !u!1 &684126149
 GameObject:
   m_ObjectHideFlags: 0
