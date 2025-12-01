@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: _testRestTile
   m_EditorClassIdentifier: 
   id: _rest_000
-  displayName: 
-  description: 
+  displayName: Test Rest
+  description: Test Rest for choices to heal, sleep, skip, or encounter.
   sprite: {fileID: 21300000, guid: 36055b8defac3a24798cc6f7856b33e5, type: 3}
   overlay: {fileID: 21300000, guid: 7904d75e3eb49b54cb52f07e08627c0c, type: 3}
   restChoices: 0

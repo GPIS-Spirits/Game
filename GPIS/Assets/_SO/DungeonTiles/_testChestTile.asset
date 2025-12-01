@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: _testChestTile
   m_EditorClassIdentifier: 
   id: _chest_000
-  displayName: 
-  description: 
+  displayName: Test Chest
+  description: Just a test for Chest tile, Rare quality.
   sprite: {fileID: 21300000, guid: 36055b8defac3a24798cc6f7856b33e5, type: 3}
   overlay: {fileID: 21300000, guid: 9832abcb1f798f548ad0f3e449aa989b, type: 3}
-  quality: 0
+  quality: 2

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e03371c530bb34baa169f481b5e16b, type: 3}
   m_Name: _testBattleTile
   m_EditorClassIdentifier: 
-  id: 
-  displayName: 
-  description: 
-  sprite: {fileID: 0}
-  overlay: {fileID: 0}
-  enemies: []
+  id: _battle_000
+  displayName: Test Battle
+  description: Just a test for the Battle Tiles, 2 Enemies.
+  sprite: {fileID: 21300000, guid: 36055b8defac3a24798cc6f7856b33e5, type: 3}
+  overlay: {fileID: 21300000, guid: a31e9bdc0ed862e41915a73bfbbf2a7c, type: 3}
+  enemies:
+  - {fileID: 11400000, guid: 374b2a7b48e0be841bdbec4cb2b41733, type: 2}
+  - {fileID: 11400000, guid: 374b2a7b48e0be841bdbec4cb2b41733, type: 2}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: _testGoalTile
   m_EditorClassIdentifier: 
   id: _goal_000
-  displayName: 
-  description: 
+  displayName: Test Goal
+  description: Test for Goal Tile popup selections
   sprite: {fileID: 21300000, guid: 36055b8defac3a24798cc6f7856b33e5, type: 3}
   overlay: {fileID: 21300000, guid: 4bedf9e3582055b43bf43175ae7fcdcf, type: 3}
   choices: 0
