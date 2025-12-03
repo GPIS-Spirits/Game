@@ -1,4 +1,7 @@
 using UnityEngine;
+/// <summary>
+/// Temp until we actually make it work
+/// </summary>
 
 [CreateAssetMenu(fileName = "NewEnemyAIProfile", menuName = "Definitions/EnemyAIProfile")]
 public class EnemyAIProfile : ScriptableObject

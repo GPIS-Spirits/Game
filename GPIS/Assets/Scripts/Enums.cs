@@ -1,5 +1,8 @@
 // Enum Definitions [ we can separate later ]
 
+using System;
+using UnityEngine;
+
 /// <summary>
 /// Used for Chests, Equipment, Cards, etc
 /// </summary>
@@ -63,10 +66,11 @@ public enum TargetingMode
     Self,               // The player
     SingleEnemy,        // Select one enemy
     AllEnemies,         // Hits all enemies
-    AllyAny,            // Select an allied elemental
     LowestHpEnemy,      // Auto-picks enemy with lowest HP (not selectable)
     Multiple,           // Allows multiple selection
-    RandomEnemy         // Auto-picks a random enemy
+    RandomEnemy,         // Auto-picks a random enemy
+    AnySingle,
+    AnyAll
 }
 
 /// <summary>
@@ -101,4 +105,12 @@ public enum EffectType
     MultiHit,        // Repeats another effect N times
     Conditional,     // Gate an inner effect on a condition
     ModifyTurnMods   // Adjust turn-scoped modifiers (e.g., All Fire attack twice)
+}
+
+[Serializable]
+public struct Resist 
+{
+    public Element element;
+    [Range(-100,100)]
+    public int percent;
 }

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabf0213eb82c53418b8d657352b6145, type: 3}
+  m_Name: water_001
+  m_EditorClassIdentifier: 
+  npcID: water_001
+  npcName: Water Elemental
+  portrait: {fileID: 21300000, guid: 8a146051c9155744686350a0c850e2fb, type: 3}
+  description: Each may select individual target, may defend player.
+  type: 0
+  quality: 0
+  targeting: 5
+  prefab: {fileID: 8860253181819355882, guid: a6137f57099a221479a652c751369fec, type: 3}
+  baseHP: 20
+  baseDmg: 8
+  baseArmor: 5
+  effectStrength: 10
+  resists:
+  - element: 0
+    percent: 15
+  - element: 3
+    percent: 10
+  - element: 5
+    percent: 15
+  - element: 2
+    percent: -25
