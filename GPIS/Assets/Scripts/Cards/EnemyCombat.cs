@@ -16,6 +16,8 @@ public class EnemyCombat : MonoBehaviour
     {
         if (!enemyDisplay) enemyDisplay = GetComponent<EnemyDisplay>();
         CurrentHP = MaxHP; // Set HP at Awake():
+
+        CombatManager.enemyCount += 1;
     }
 
     // Takes in final damage number (calculated outside of 'EnemyCombat' Class) to apply to this enemy.
@@ -24,7 +26,12 @@ public class EnemyCombat : MonoBehaviour
         CurrentHP -= amount;
         Debug.Log($"Enemy took {amount} damage. HP: {CurrentHP}/{MaxHP}");
 
-        if (CurrentHP <= 0) { Destroy(gameObject); }
+        if (CurrentHP <= 0) {
+            Destroy(gameObject);
+
+            CombatManager.enemyCount -= 1;
+            CombatManager.isBattleOver(); // Checks to see if 'enemyCount' is 0 to end the battle and reload 'dunegonLoop':
+        }
     }
 
     public int GetAttackValue()

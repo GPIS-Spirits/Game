@@ -13,6 +13,7 @@ Need to Add:
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CombatManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class CombatManager : MonoBehaviour
     public HandManager handManager;
     public EnemyCombat activeEnemy;
     public PlayerDeck playerDeck;
+
+    public static int enemyCount;
 
     // Calculates damage based on stats of passed 'ElementalCombat.Def'.
     private int ComputeAttackDamage(ElementalCombat elemental)
@@ -47,6 +50,16 @@ public class CombatManager : MonoBehaviour
         foreach (var c in toDiscard) // For each played card that has been added to 'toDiscard':
         {
             handManager.Discard(c, playerDeck);
+        }
+    }
+
+    public static void isBattleOver()
+    {
+        if (enemyCount <= 0)
+        {
+            Debug.Log("All enemies defeated! Battle Over.");
+
+            GameManager.Instance.ExitBattle(); // Equivalent to "SceneManager.UnloadSceneAsync("battle");" using the GameManager:
         }
     }
 }

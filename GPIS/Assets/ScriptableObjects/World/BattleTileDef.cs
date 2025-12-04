@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement; // Used to call 'loadScene()' for entering the 'battle' scene.
+
 /// <summary>
 /// Tile for Dungeon Battles
 /// </summary>
@@ -16,5 +18,7 @@ public class BattleTileDef : BaseTileDef, IDungeonTileOnLand
     public void OnLand(DungeonHandler dungeon, int tileIndex)
     {
         Debug.Log("Landed on Battle tile!");
+
+        GameManager.Instance.EnterBattle(); // Equivalent to "SceneManager.LoadScene("battle", LoadSceneMode.Additive);" using the GameManager:
     }
 }
