@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabf0213eb82c53418b8d657352b6145, type: 3}
+  m_Name: _testElemental
+  m_EditorClassIdentifier: 
+  npcID: _elemental_000
+  npcName: Test Elemental
+  portrait: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  description: Test Elemental
+  type: 0
+  targeting: 2
+  prefab: {fileID: 3171452937993347930, guid: a61ad24127787be4abc298d344f1595b, type: 3}
+  baseHP: 100
+  baseDmg: 1
+  baseArmor: 100
+  effectStrength: 0
+  resists:
+  - element: 0
+    percent: 25
+  - element: 1
+    percent: 15
+  - element: 2
+    percent: 55
+  - element: 3
+    percent: -100
+  - element: 4
+    percent: -15
+  - element: 5
+    percent: 0

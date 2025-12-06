@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabf0213eb82c53418b8d657352b6145, type: 3}
+  m_Name: air_001
+  m_EditorClassIdentifier: 
+  npcID: air_001
+  npcName: Air Elemental
+  portrait: {fileID: 21300000, guid: b585d95d18f8e3c47b1607b0aa4eb80f, type: 3}
+  description: Attacks shuffle enemy position.
+  type: 3
+  quality: 0
+  targeting: 6
+  prefab: {fileID: 3262530900142809040, guid: 1a7edc7a37271284e97406d890c9152a, type: 3}
+  baseHP: 15
+  baseDmg: 10
+  baseArmor: 0
+  effectStrength: 10
+  resists:
+  - element: 3
+    percent: 20
+  - element: 2
+    percent: 15
+  - element: 0
+    percent: -10
