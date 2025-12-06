@@ -35,6 +35,30 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        speed = 5f;
+
+        // Subscribe to scene load event to move player to spawn point
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        string spawnPointName = PlayerPrefs.GetString("SpawnPointName", "");
+        if (!string.IsNullOrEmpty(spawnPointName))
+        {
+            GameObject spawnPoint = GameObject.Find(spawnPointName);
+            if (spawnPoint != null)
+            {
+                transform.position = spawnPoint.transform.position;
+            }
+            else
+            {
+                Debug.LogWarning($"Spawn point '{spawnPointName}' not found in the scene.");
+            }
+            // Clear the spawn point name after use
+            PlayerPrefs.DeleteKey("SpawnPointName");
+        }
     }
 
     void Update()
@@ -56,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
 
     void EnterDoor()
     {
+        // Store the spawn point name so we can access it after scene load
+        PlayerPrefs.SetString("SpawnPointName", currentDoor.spawnPointName);
         SceneManager.LoadScene(currentDoor.sceneToLoad);
     }
 
@@ -130,5 +156,10 @@ public class PlayerMovement : MonoBehaviour
             if (interactText != null)
                 interactText.gameObject.SetActive(false);
         }
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

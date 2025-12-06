@@ -10060,6 +10060,37 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &422997852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 422997853}
+  m_Layer: 0
+  m_Name: ShopSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &422997853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422997852}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -10361,7 +10392,7 @@ PrefabInstance:
     - target: {fileID: 3934888782329391837, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -485881362, guid: b642fcbc55a536d4484cc856e7c91d11, type: 3}
+      objectReference: {fileID: 604911402, guid: 83cae16700f53f545ac76471da7945bc, type: 3}
     - target: {fileID: 3934888782329391837, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
       propertyPath: m_SortingOrder
       value: 3
@@ -10372,7 +10403,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4980979135515899364, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4980979135515899364, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7008844449934448954, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10423,80 +10458,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4980979135515899364, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1693144218}
     - targetCorrespondingSourceObject: {fileID: 350588911102138043, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1934591877}
   m_SourcePrefab: {fileID: 100100000, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
---- !u!1 &1693144217 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4980979135515899364, guid: 2033f4bee67459641a375cc2b3d66caf, type: 3}
-  m_PrefabInstance: {fileID: 1693144216}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1693144218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693144217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca54bf47490f51d4f801d0ae00a839fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movement:
-    m_Name: Movement
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ec4b3551-ec9b-473a-9246-c9a7f88b3ff1
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 2D Vector
-      m_Id: 83e53b88-dd17-4e8e-9359-1545643bd2ae
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Movement
-      m_Flags: 4
-    - m_Name: up
-      m_Id: eb92b6d3-1546-43fc-b0a4-3c47d96d37c2
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Movement
-      m_Flags: 8
-    - m_Name: down
-      m_Id: 2e268020-236c-49bf-ac45-1edfb78bb708
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Movement
-      m_Flags: 8
-    - m_Name: left
-      m_Id: 3e35d1d9-1280-485e-a140-7b0638d54339
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Movement
-      m_Flags: 8
-    - m_Name: right
-      m_Id: e0028e54-2360-42d0-ac09-1d7bc122decc
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Movement
-      m_Flags: 8
-    m_Flags: 0
-  moveSpeed: 50
 --- !u!1 &1811368968
 GameObject:
   m_ObjectHideFlags: 0
@@ -11526,3 +11491,4 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 2051780645}
   - {fileID: 1811368970}
+  - {fileID: 422997853}
