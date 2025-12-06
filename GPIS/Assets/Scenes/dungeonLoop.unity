@@ -416,6 +416,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d218cf50445713846b99ff5edc574748, type: 2}
   - {fileID: 11400000, guid: 47fa8ab813c39ab4780de802b7d81477, type: 2}
   playerMarker: {fileID: 707614613}
+  flipTargets:
+  - {fileID: 744867263}
+  - {fileID: 79027442}
+  - {fileID: 1290376169}
+  - {fileID: 31528773}
+  - {fileID: 10623282}
+  - {fileID: 1895311539}
+  - {fileID: 152506304}
+  - {fileID: 563290133}
+  - {fileID: 1932446184}
+  turnSpinDuration: 0.35
   startIndex: 0
   jumpDuration: 0.45
   jumpHeight: 3.2
@@ -487,6 +498,11 @@ MonoBehaviour:
 --- !u!4 &707614613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6099033089838067477, guid: a61ad24127787be4abc298d344f1595b, type: 3}
+  m_PrefabInstance: {fileID: 1439889515}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &744867263 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2359105922938325265, guid: a61ad24127787be4abc298d344f1595b, type: 3}
   m_PrefabInstance: {fileID: 1439889515}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1290376169 stripped
@@ -706,7 +722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6099033089838067477, guid: a61ad24127787be4abc298d344f1595b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 6099033089838067477, guid: a61ad24127787be4abc298d344f1595b, type: 3}
       propertyPath: m_LocalRotation.w
