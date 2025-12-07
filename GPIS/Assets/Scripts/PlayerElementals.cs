@@ -162,6 +162,11 @@ public class PlayerElementals : MonoBehaviour
             list[i].transform.localRotation = Quaternion.identity;
         }
     }
+
+    // ----------------------------------------------------------------------
+    // USED TO UPDATE STATS
+    // ----------------------------------------------------------------------
+
     public PlayerStats RefreshStats()
     {
         PlayerStats stats = new PlayerStats
@@ -203,4 +208,10 @@ public class PlayerElementals : MonoBehaviour
         return stats;
     }
 
+    // ----------------------------------------------------------------------
+    // RETURNS FLYING AND GROUND LISTS FOR INV DISPLAY
+    // ----------------------------------------------------------------------
+
+    public List<Elemental> GetFlyingList() => flyingElementals;
+    public List<Elemental> GetGroundList() => groundElementals;
 }

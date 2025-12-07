@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 9031245001890766568}
   - component: {fileID: 3351826745789451710}
   m_Layer: 0
-  m_Name: Slot_002
+  m_Name: Ground_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 3854375052751876203}
   - component: {fileID: 5226733699105741710}
   m_Layer: 0
-  m_Name: Slot_002
+  m_Name: Fly_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aa8722db8deb64b93782842daff032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxElementals: 4
   spawner: {fileID: 0}
   flyingPositions:
   - {fileID: 3470877453317192216}
@@ -365,6 +366,17 @@ MonoBehaviour:
   - {fileID: 9031245001890766568}
   - {fileID: 1377440609138091450}
   - {fileID: 8208371825889535837}
+  baseHP: 50
+  baseArmor: 0
+  baseDmg: 10
+  baseEffect: 0
+  baseEnergy: 3
+  stats:
+    totalHP: 0
+    totalArmor: 0
+    totalDmg: 0
+    totalEffect: 0
+    totalEnergy: 0
 --- !u!1 &3645782107777262848
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +388,7 @@ GameObject:
   - component: {fileID: 4857402761721029061}
   - component: {fileID: 1138275665487387865}
   m_Layer: 0
-  m_Name: Slot_003
+  m_Name: Fly_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -460,7 +472,7 @@ GameObject:
   - component: {fileID: 3470877453317192216}
   - component: {fileID: 8296843851033669472}
   m_Layer: 0
-  m_Name: Slot_001
+  m_Name: Fly_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -661,7 +673,7 @@ GameObject:
   - component: {fileID: 2927116884387759558}
   - component: {fileID: 6441612802895612606}
   m_Layer: 0
-  m_Name: Slot_004
+  m_Name: Fly_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -745,7 +757,7 @@ GameObject:
   - component: {fileID: 1377440609138091450}
   - component: {fileID: 5268420854996237381}
   m_Layer: 0
-  m_Name: Slot_003
+  m_Name: Ground_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -829,7 +841,7 @@ GameObject:
   - component: {fileID: 8208371825889535837}
   - component: {fileID: 4278436148889118509}
   m_Layer: 0
-  m_Name: Slot_004
+  m_Name: Ground_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -981,7 +993,7 @@ GameObject:
   - component: {fileID: 158515093417610525}
   - component: {fileID: 4689779623644648279}
   m_Layer: 0
-  m_Name: Slot_001
+  m_Name: Ground_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
