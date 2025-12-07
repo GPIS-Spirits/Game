@@ -8,14 +8,15 @@ public struct PlayerStats
     public int totalArmor;
     public int totalDmg;
     public int totalEffect;
+    public int totalEnergy;
 
     public Dictionary<Element, int> resists;
     public override string ToString()
     {
         string line1 =
-            $"STATS || HP: {totalHP} || ARM: {totalArmor} || DMG: {totalDmg} || FX: {totalEffect}";
-        string line2 = "RESISTS";
+            $"STATS || HP: {totalHP} || ARM: {totalArmor} || DMG: {totalDmg} || FX: {totalEffect} || EN: {totalEnergy}";
 
+        string line2 = "RESISTS";
         if (resists != null && resists.Count > 0)
         {
             foreach (var kvp in resists)
@@ -28,6 +29,7 @@ public struct PlayerStats
 
         return line1 + "\n" + line2;
     }
+
 }
 
 public class PlayerElementals : MonoBehaviour
@@ -42,7 +44,16 @@ public class PlayerElementals : MonoBehaviour
     private List<Elemental> flyingElementals = new List<Elemental>();
     private List<Elemental> groundElementals = new List<Elemental>();
 
-    private const int MAX = 4;
+    private const int MAXELEMENTALS = 4;
+
+    [Header("Base Player Stats")]
+    public int baseHP = 50;
+    public int baseArmor = 0;
+    public int baseDmg = 10;
+    public int baseEffect = 0;
+    public int baseEnergy = 3;
+
+
     public PlayerStats stats;
     private void Start()
     {
@@ -77,7 +88,7 @@ public class PlayerElementals : MonoBehaviour
         List<Elemental> list = isGround ? groundElementals : flyingElementals;
         Transform[] slots = isGround ? groundPositions : flyingPositions;
 
-        if (list.Count >= MAX)
+        if (list.Count >= MAXELEMENTALS)
             return;
 
         int slotIndex = list.Count;
@@ -147,10 +158,11 @@ public class PlayerElementals : MonoBehaviour
     {
         PlayerStats stats = new PlayerStats
         {
-            totalHP = 0,
-            totalArmor = 0,
-            totalDmg = 0,
-            totalEffect = 0,
+            totalHP = baseHP,
+            totalArmor = baseArmor,
+            totalDmg = baseDmg,
+            totalEffect = baseEffect,
+            totalEnergy = baseEnergy,
             resists = new Dictionary<Element, int>()
         };
 
