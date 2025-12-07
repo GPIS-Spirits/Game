@@ -316,6 +316,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6099033089838067477}
+  - component: {fileID: 4873926485497179929}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -341,6 +342,29 @@ Transform:
   - {fileID: 3837761499433889482}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4873926485497179929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171452937993347930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24aa8722db8deb64b93782842daff032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
+  flyingPositions:
+  - {fileID: 3470877453317192216}
+  - {fileID: 3854375052751876203}
+  - {fileID: 4857402761721029061}
+  - {fileID: 2927116884387759558}
+  groundPositions:
+  - {fileID: 158515093417610525}
+  - {fileID: 9031245001890766568}
+  - {fileID: 1377440609138091450}
+  - {fileID: 8208371825889535837}
 --- !u!1 &3645782107777262848
 GameObject:
   m_ObjectHideFlags: 0
