@@ -34,6 +34,10 @@ public struct PlayerStats
 
 public class PlayerElementals : MonoBehaviour
 {
+
+    public int maxElementals = 4;
+    private int currElementals = 0;
+
     [Header("Spawner")]
     public ElementalSpawner spawner;
 
@@ -44,7 +48,6 @@ public class PlayerElementals : MonoBehaviour
     private List<Elemental> flyingElementals = new List<Elemental>();
     private List<Elemental> groundElementals = new List<Elemental>();
 
-    private const int MAXELEMENTALS = 4;
 
     [Header("Base Player Stats")]
     public int baseHP = 50;
@@ -83,12 +86,17 @@ public class PlayerElementals : MonoBehaviour
 
     public void SpawnElemental(Element element, Quality quality)
     {
+        if (currElementals >= maxElementals)
+        {
+            Debug.Log("Too many elementals, not spawning.");
+            return;
+        }
         bool isGround = (element == Element.Earth);
 
         List<Elemental> list = isGround ? groundElementals : flyingElementals;
         Transform[] slots = isGround ? groundPositions : flyingPositions;
 
-        if (list.Count >= MAXELEMENTALS)
+        if (list.Count >= maxElementals)
             return;
 
         int slotIndex = list.Count;
@@ -97,7 +105,7 @@ public class PlayerElementals : MonoBehaviour
         list.Add(elem);
 
         Debug.Log($"Spawned Elemental: {element} ({quality}) into slot {slotIndex}");
-
+        ++currElementals;
         stats = RefreshStats();
         Debug.Log(stats);
     }
@@ -127,7 +135,7 @@ public class PlayerElementals : MonoBehaviour
         Debug.Log($"Removed Elemental: {toRemove.def.type} ({toRemove.quality}) from slot {idx}");
 
         Destroy(toRemove.gameObject);
-
+        --currElementals;
         list.RemoveAt(idx);
         CompactList(list, slots);
 
