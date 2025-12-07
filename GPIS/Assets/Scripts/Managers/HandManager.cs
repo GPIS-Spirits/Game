@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -7,6 +8,10 @@ public class HandManager : MonoBehaviour
     [Header("Card UI Prefab")]
     [SerializeField] private GameObject cardPrefab; // assign PlayableCard_UI prefab here
     [SerializeField] private ElementalCombat defaultOwnerElemental;
+
+    public const int maxHandsize = 5;
+    //public static int handSize = 0;
+    public int HandSize => Hand.Count;
 
     [Header("Curve Settings (parabola)")]
     [SerializeField] private RectTransform Vertex;
@@ -85,6 +90,7 @@ public class HandManager : MonoBehaviour
         if (!Hand.Contains(card))
         {
             Hand.Add(card);
+            //handSize += 1;
 
             // Ensures correct visual layer ordering (left = bottom, right = top)
             card.transform.SetSiblingIndex(Hand.Count - 1);
@@ -117,7 +123,25 @@ public class HandManager : MonoBehaviour
 
             // Recalculate positions on the curve
             UpdateCardTargets();
+
+            //HandManager.handSize -= 1;
         }
+    }
+
+    // Clears all cards from the hand and destroys their GameObjects.
+    public void ClearHand()
+    {
+        // iterate over a copy to avoid modifying the collection while enumerating
+        foreach (var card in Hand.ToArray())
+        {
+            if (card == null) continue;
+            RemoveFromHand(card);
+            if (card.gameObject != null)
+                Destroy(card.gameObject);
+        }
+
+        Hand.Clear();
+        UpdateCardTargets();
     }
 
     // -------------------

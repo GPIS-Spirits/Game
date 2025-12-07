@@ -14,7 +14,7 @@ public class TurnManager : MonoBehaviour
     public HandManager handManager;
 
     [Header("Turn Settings")]
-    public int startingHandSize = 5;
+    public int startingHandSize;
     public int drawPerPlayerTurn = 1;
 
     void Start()
@@ -52,7 +52,8 @@ public class TurnManager : MonoBehaviour
 
     private void DrawStep(int n)
     {
-        if (!playerDeck || !handManager || n <= 0) return;
+        // Use the HandManager instance's HandSize instead of the old static counter
+        if (!playerDeck || !handManager || n <= 0 || handManager.HandSize >= HandManager.maxHandsize) return;
 
         var buffer = new List<PlayableCardDef>();
         int drawn = playerDeck.TryDraw(n, buffer);

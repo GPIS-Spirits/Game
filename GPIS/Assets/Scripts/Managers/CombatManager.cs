@@ -20,6 +20,7 @@ public class CombatManager : MonoBehaviour
     [Header("Game Object Wiring")]
     public HandManager handManager;
     public EnemyCombat activeEnemy;
+    public PlayerCombat playerCombat;
     public PlayerDeck playerDeck;
 
     public static int enemyCount;
@@ -42,8 +43,18 @@ public class CombatManager : MonoBehaviour
         {
             if (card.ownerElemental == null) continue; // No current Elemental on the field connected to this card: 
 
-            int dmg = ComputeAttackDamage(card.ownerElemental);
-            activeEnemy.TakeDamage(dmg);
+            // Checks card type and evokes the appropriate action method:
+            if (card.Display.playableCard.actionType == CardActionType.Attack) // If the played card is an Attack type:
+            {
+                // Compute damage and apply to active enemy:
+                int dmg = ComputeAttackDamage(card.ownerElemental);
+                activeEnemy.TakeDamage(dmg);
+            }
+            else if (card.Display.playableCard.actionType == CardActionType.Defend) // If the played card is a Defend (Heal) type:
+            {
+                playerCombat.Heal(1);
+            }
+
             toDiscard.Add(card); // Adds played cards to the List 'toDiscard' to "mark" them for removal.
         }
 
@@ -58,6 +69,11 @@ public class CombatManager : MonoBehaviour
         if (enemyCount <= 0)
         {
             Debug.Log("All enemies defeated! Battle Over.");
+
+            // Find the hand manager in scene and clear it:
+            var hm = Object.FindObjectOfType<HandManager>();
+            if (hm != null)
+                hm.ClearHand();
 
             GameManager.Instance.ExitBattle(); // Equivalent to "SceneManager.UnloadSceneAsync("battle");" using the GameManager:
         }

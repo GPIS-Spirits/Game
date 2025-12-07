@@ -33,4 +33,15 @@ public class PlayerCombat : MonoBehaviour
             // --- Add Player Lose logic here! ---
         }
     }
+
+    public void Heal(int amount)
+    {
+        if (CurrentHP != MaxHP)
+        {
+            amount = Mathf.Max(0, amount);
+            CurrentHP = Mathf.Min(MaxHP, CurrentHP + amount);
+
+            Debug.Log($"Player healed {amount} HP. HP: {CurrentHP}/{MaxHP}");
+        }
+    }
 }
