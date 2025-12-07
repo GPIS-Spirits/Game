@@ -24,7 +24,7 @@ public class CombatManager : MonoBehaviour
     // Calculates damage based on stats of passed 'ElementalCombat.Def'.
     private int ComputeAttackDamage(ElementalCombat elemental)
     {
-        float raw = elemental.Def.dmgFlat * elemental.Def.dmgMult; // Damage = dmgFlat * smgMult
+        float raw = elemental.Def.baseDmg; // Damage = baseDmg
         return Mathf.Max(0, Mathf.RoundToInt(raw)); // 'Mathf.Max()' - Returns higher number of inputs. | 'RoundToInt()' - Rounds non-ints to nearest int.
     }
 

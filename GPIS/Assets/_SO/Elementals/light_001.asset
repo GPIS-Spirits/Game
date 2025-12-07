@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabf0213eb82c53418b8d657352b6145, type: 3}
+  m_Name: light_001
+  m_EditorClassIdentifier: 
+  npcID: l_001
+  npcName: Light Elemental
+  portrait: {fileID: 21300000, guid: 2e83fce9f03654843bc8a6c6fbcbd932, type: 3}
+  description: Attacks all enemies, lowering their damage.
+  type: 4
+  quality: 0
+  targeting: 8
+  prefab: {fileID: 7189896033632946014, guid: 0280fc06bb0e13f4abc0faba3b3a87d6, type: 3}
+  baseHP: 25
+  baseDmg: 10
+  baseArmor: 2
+  effectStrength: 5
+  resists:
+  - element: 5
+    percent: 25
+  - element: 1
+    percent: 10
+  - element: 2
+    percent: -10
+  - element: 0
+    percent: 10
