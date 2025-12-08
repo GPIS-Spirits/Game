@@ -12,12 +12,44 @@ public class EnemyCombat : MonoBehaviour
     public int CurrentHP { get; private set; } // "Auto-Implemented Get/Set" - C# shortcut that allows "CurrentHP" to be accessed publicly, set privately.
     public int MaxHP => enemyDisplay.enemy.maxHealth; // Lambda Operator '=>' - Shorthand Getter definition for 'MaxHP'.
 
+    private bool isHighlighted = false;
+
+    // Renderers for Spirit Highlights:
+    private SpriteRenderer[] spriteRenderers;
+    private Color[] spriteOriginalColors;
+    private Renderer[] otherRenderers;
+    private Color[] otherOriginalColors;
+
+    [SerializeField] private Color highlightColor = Color.red;
+
     void Awake()
     {
         if (!enemyDisplay) enemyDisplay = GetComponent<EnemyDisplay>();
         CurrentHP = MaxHP; // Set HP at Awake():
 
         CombatManager.enemyCount += 1;
+
+        // Cache sprite renderers and their original colors:
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+        spriteOriginalColors = new Color[spriteRenderers.Length];
+        for (int i = 0; i < spriteRenderers.Length; i++)
+            spriteOriginalColors[i] = spriteRenderers[i].color;
+
+        // Cache other renderers (exclude sprite renderers):
+        var allRenderers = GetComponentsInChildren<Renderer>(true);
+        var list = new List<Renderer>();
+        foreach (var r in allRenderers)
+        {
+            if (r is SpriteRenderer) continue;
+            list.Add(r);
+        }
+        otherRenderers = list.ToArray();
+        otherOriginalColors = new Color[otherRenderers.Length];
+        for (int i = 0; i < otherRenderers.Length; i++)
+        {
+            // Store material color if available:
+            otherOriginalColors[i] = otherRenderers[i].material.color;
+        }
     }
 
     // Takes in final damage number (calculated outside of 'EnemyCombat' Class) to apply to this enemy.
@@ -27,10 +59,39 @@ public class EnemyCombat : MonoBehaviour
         Debug.Log($"Enemy took {amount} damage. HP: {CurrentHP}/{MaxHP}");
 
         if (CurrentHP <= 0) {
-            Destroy(gameObject);
+            // Notify CombatManager to destroy Enemy:
+            var manager = Object.FindObjectOfType<CombatManager>();
+            if (manager != null) manager.OnEnemyDeath(this);
+            else {
+                Destroy(gameObject);
+                CombatManager.enemyCount -= 1;
+                CombatManager.isBattleOver();
+            }
+        }
+    }
 
-            CombatManager.enemyCount -= 1;
-            CombatManager.isBattleOver(); // Checks to see if 'enemyCount' is 0 to end the battle and reload 'dunegonLoop':
+    public void SetHighlighted(bool on)
+    {
+        isHighlighted = on;
+
+        // Update sprite renderers:
+        if (spriteRenderers != null)
+        {
+            for (int i = 0; i < spriteRenderers.Length; i++)
+            {
+                if (spriteRenderers[i] == null) continue;
+                spriteRenderers[i].color = on ? highlightColor : spriteOriginalColors[i];
+            }
+        }
+
+        // Update other renderers:
+        if (otherRenderers != null)
+        {
+            for (int i = 0; i < otherRenderers.Length; i++)
+            {
+                if (otherRenderers[i] == null) continue;
+                otherRenderers[i].material.color = on ? highlightColor : otherOriginalColors[i];
+            }
         }
     }
 
@@ -46,5 +107,14 @@ public class EnemyCombat : MonoBehaviour
         int dmg = Mathf.Max(0, GetAttackValue());
         player.TakeDamage(dmg);
         Debug.Log($"Enemy attacked Player for {dmg} damage!");
+    }
+
+    // Selects enemy when clicked to target for attack cards.
+    void OnMouseDown()
+    {
+        Debug.Log($"EnemyCombat.OnMouseDown on {gameObject.name}");
+
+        var manager = Object.FindObjectOfType<CombatManager>();
+        if (manager != null) manager.SelectEnemy(this);
     }
 }

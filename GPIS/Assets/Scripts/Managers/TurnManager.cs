@@ -1,3 +1,5 @@
+// Manager for Player & Enemy turns during a battle.
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,9 +37,13 @@ public class TurnManager : MonoBehaviour
         CurrentPhase = Phase.Enemy;
 
         // --- Enemy AI Decision Tree implementation would go here, but simple attack for now! ---
-        if (combatManager && combatManager.activeEnemy)
+        if (combatManager != null && combatManager.activeEnemies != null && combatManager.activeEnemies.Count > 0)
         {
-            combatManager.activeEnemy.PerformAttack(player);
+            foreach (var enemy in combatManager.activeEnemies)
+            {
+                if (enemy != null)
+                    enemy.PerformAttack(player);
+            }
         }
 
         StartPlayerTurn(); // Switch the turn back to the Player after enemy attacks:
