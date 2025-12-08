@@ -76,16 +76,19 @@ public class CombatManager : MonoBehaviour
         if (enemySpawnPoints == null || enemySpawnPoints.Length == 0 || enemyPrefab == null)
             return;
 
-        foreach (var sp in enemySpawnPoints)
+        while (activeEnemies.Count <= 0)
         {
-            if (sp == null) continue;
-            if (Random.value <= 0.6f)
+            foreach (var sp in enemySpawnPoints)
             {
-                var go = Instantiate(enemyPrefab, sp.position, sp.rotation);
-                var ec = go.GetComponent<EnemyCombat>();
-                if (ec != null)
+                if (sp == null) continue;
+                if (Random.value <= 0.6f)
                 {
-                    activeEnemies.Add(ec);
+                    var go = Instantiate(enemyPrefab, sp.position, sp.rotation);
+                    var ec = go.GetComponent<EnemyCombat>();
+                    if (ec != null)
+                    {
+                        activeEnemies.Add(ec);
+                    }
                 }
             }
         }
