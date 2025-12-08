@@ -53,6 +53,27 @@ public class CardInteraction : MonoBehaviour
 
     public void SetSelected(bool selected)
     {
+        // Allows only 2 cards to be selected at a time before pressing "Play Cards":
+        if (selected && !IsSelected)
+        {
+            var handManager = GetComponentInParent<HandManager>();
+            if (handManager != null)
+            {
+                int selectedCount = 0;
+                foreach (var c in handManager.GetSelectedCards())
+                {
+                    selectedCount++;
+                    if (selectedCount >= 2) break;
+                }
+
+                if (selectedCount >= 2)
+                {
+                    Debug.Log("Maximum of 2 cards may be selected at once.");
+                    return;
+                }
+            }
+        }
+
         IsSelected = selected;
         if (selectionHighlight) selectionHighlight.enabled = selected;
     }
