@@ -51,9 +51,9 @@ public class PlayerMovement : MonoBehaviour
         Interact();
 
         if (nearNPC && currentNPC != null && Input.GetKeyDown(KeyCode.T))
-{
-    ShowNPCPreviewText();
-}
+        {
+            ShowNPCPreviewText();
+        }
     }
 
     void Interact()
@@ -61,11 +61,6 @@ public class PlayerMovement : MonoBehaviour
         if (nearDoor && currentDoor != null && Input.GetKeyDown(KeyCode.E))
         {
             EnterDoor();
-        }
-
-        if (nearNPC && currentNPC != null && Input.GetKeyDown(KeyCode.E))
-        {
-            TalkToNPC();
         }
     }
 
@@ -162,19 +157,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (other.CompareTag("NPC"))
-{
-    currentNPC = other.GetComponent<NPC>();
+        {
+            currentNPC = other.GetComponent<NPC>();
 
-    if (currentNPC != null)
-    {
-        nearNPC = true;
-        nearDoor = false;
-        currentDoor = null;
+            if (currentNPC != null)
+            {
+                nearNPC = true;
+                nearDoor = false;
+                currentDoor = null;
 
-        interactText.text = "Press T to Talk";
-        interactText.gameObject.SetActive(true);
-    }
-}
+                interactText.text = "Press T to Talk";
+                interactText.gameObject.SetActive(true);
+            }
+        }
 
 
     }
@@ -190,27 +185,27 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (other.CompareTag("NPC"))
-{
-    nearNPC = false;
-    currentNPC = null;
+        {
+            nearNPC = false;
+            currentNPC = null;
 
-    if (dialogueText != null)
-        dialogueText.gameObject.SetActive(false);
+            if (dialogueText != null)
+                dialogueText.gameObject.SetActive(false);
 
-    interactText.text = "Press T to Talk"; // reset it
-    interactText.gameObject.SetActive(false); // hide it since we're leaving
-}
+            interactText.text = "Press T to Talk"; // reset it
+            interactText.gameObject.SetActive(false); // hide it since we're leaving
+        }
 
     }
 
     void ShowNPCPreviewText()
-{
-    if (interactText == null || currentNPC == null)
-        return;
+    {
+        if (interactText == null || currentNPC == null)
+            return;
 
-    // Show the NPC's text as the prompt temporarily
-    interactText.text = currentNPC.dialogueText;
-    interactText.gameObject.SetActive(true);
-}
+        // Show the NPC's text as the prompt temporarily
+        interactText.text = currentNPC.dialogueText;
+        interactText.gameObject.SetActive(true);
+    }
 
 }
