@@ -148,7 +148,7 @@ public class CombatManager : MonoBehaviour
 
             if (card.Display.playableCard.actionType == CardActionType.Attack)
             {
-                // Choose target ("selectedEnemy", otherwise first active enemy):
+                // Choose target (If not enemy selected, then default to first enemy in list):
                 EnemyCombat target = selectedEnemy;
                 if (target == null && activeEnemies.Count > 0) target = activeEnemies[0];
                 if (target == null) continue; // No target available:

@@ -42,7 +42,10 @@ public class TurnManager : MonoBehaviour
             foreach (var enemy in combatManager.activeEnemies)
             {
                 if (enemy != null)
-                    enemy.PerformAttack(player);
+                    if (Random.value <= 0.30f) // Enemies attack player with 35% chance each turn:
+                        enemy.PerformAttack(player);
+                    else
+                        Debug.Log("Enemy missed!");
             }
         }
 
