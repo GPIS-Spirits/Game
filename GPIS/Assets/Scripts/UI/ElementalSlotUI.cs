@@ -19,6 +19,10 @@ public class ElementalSlotUI : MonoBehaviour
         outline.sprite = null;
         icon.color = Color.clear;
         outline.color = Color.clear;
+
+        icon.enabled = false;
+        outline.enabled = false;
+
         button.interactable = false;
     }
 
@@ -26,5 +30,8 @@ public class ElementalSlotUI : MonoBehaviour
     {
         referencedElement = elem;
         button.interactable = true;
+
+        icon.enabled = true;
+        outline.enabled = true;
     }
 }

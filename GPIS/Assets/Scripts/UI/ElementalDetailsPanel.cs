@@ -1,31 +1,62 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class ElementalDetailsPanel : MonoBehaviour
 {
     public TMP_Text nameText;
+    public TMP_Text qualityText;
     public Image icon;
     public Image outline;
     public TMP_Text statsText;
     public TMP_Text resistText;
 
+    [Header("Rename UI")]
+    public Button renameButton;
+    public TMP_InputField renameInput;
+
+    // event used to notify ElementalView to refresh
+    public Action OnRenamed;
+
+    public Elemental currentElem;
+
     public void Show(Elemental elem)
     {
+        currentElem = elem;
+
         if (elem == null)
         {
             nameText.text = "";
+            qualityText.text = "";
             statsText.text = "";
             resistText.text = "";
+
             icon.sprite = null;
+            icon.color = Color.clear;
+
             outline.sprite = null;
+            outline.color = Color.clear;
+            outline.enabled = false;
+
+            renameButton.interactable = false;
+            renameButton.gameObject.SetActive(false);
+            renameInput.gameObject.SetActive(false);
             return;
         }
 
-        // Name
-        nameText.text = $"{elem.def.type} [{elem.quality}]";
+        // Show rename button
+        renameButton.interactable = true;
+        renameButton.gameObject.SetActive(true);
+        renameInput.gameObject.SetActive(false);
 
-        // Extract base sprite
+        // Name (actual generated name)
+        nameText.text = elem.gameObject.name;
+
+        // Quality
+        qualityText.text = elem.quality.ToString();
+
+        // Icon Sprite
         SpriteRenderer bodySR = elem.def.prefab.GetComponentInChildren<SpriteRenderer>();
         if (bodySR != null)
         {
@@ -33,13 +64,14 @@ public class ElementalDetailsPanel : MonoBehaviour
             icon.color = bodySR.color;
         }
 
-        // Extract overlay from instance
+        // Rarity overlay from instance
         Transform overlayTransform = elem.transform.Find("RarityOverlay");
         if (overlayTransform != null)
         {
             var overlaySR = overlayTransform.GetComponent<SpriteRenderer>();
             if (overlaySR != null)
             {
+                outline.enabled = true;
                 outline.sprite = overlaySR.sprite;
                 outline.color = overlaySR.color;
             }
@@ -60,5 +92,40 @@ public class ElementalDetailsPanel : MonoBehaviour
         {
             resistText.text = "No Resists";
         }
+    }
+
+    // ------------------------------------------------------------
+    // RENAME LOGIC
+    // ------------------------------------------------------------
+
+    public void BeginRename()
+    {
+        if (currentElem == null) return;
+
+        renameInput.text = currentElem.gameObject.name;
+        renameInput.gameObject.SetActive(true);
+        renameInput.Select();
+        renameInput.ActivateInputField();
+    }
+
+    public void ApplyRename()
+    {
+        if (currentElem == null) return;
+
+        string newName = renameInput.text.Trim();
+        if (!string.IsNullOrEmpty(newName))
+            currentElem.name = newName;
+
+        renameInput.gameObject.SetActive(false);
+
+        // Let ElementalView handle the UI refresh + re-show
+        OnRenamed?.Invoke();
+    }
+    public void GetName()
+    {
+        if (currentElem == null)
+            return;
+
+        renameInput.text = currentElem.gameObject.name;
     }
 }

@@ -44,9 +44,12 @@ public class DungeonHandler : MonoBehaviour
     private readonly List<TileInstance> _tiles = new();
     private int _currentIndex;
     private bool _isJumping;
-
     private Vector3 _baseScale = Vector3.one;
 
+
+    // This is used to prevent a/d movement
+    public ElementalView elementalView;
+    
     /// <summary>
     /// Holds all the per-tile data
     /// Position, Tile Definition, Visited bool
@@ -85,6 +88,8 @@ public class DungeonHandler : MonoBehaviour
 
     private void Update()
     {
+        if (elementalView.isOpen == true) return;
+
         if (_isJumping || _isTurning) return;
 
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
