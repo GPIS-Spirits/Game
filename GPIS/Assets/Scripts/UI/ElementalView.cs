@@ -12,10 +12,19 @@ public class ElementalView : MonoBehaviour
 
     public ElementalDetailsPanel detailsPanel;
 
-    private bool isOpen = false;
+    private Elemental selectedElem;
+    public bool isOpen = false;
+
+    private void Start()
+    {
+        detailsPanel.OnRenamed += OnElementalRenamed;
+    }
 
     private void Update()
     {
+        // block C while typing
+        if (detailsPanel.renameInput.IsActive()) return;
+
         if (Input.GetKeyDown(KeyCode.C))
             ToggleView();
     }
@@ -25,22 +34,30 @@ public class ElementalView : MonoBehaviour
         isOpen = !isOpen;
         panel.SetActive(isOpen);
 
+        detailsPanel.Show(null);
+
         if (isOpen)
             RefreshSlots();
     }
 
     // -----------------------------------------------------
-    // Refresh the left-hand 8 slots
+    // Refresh slots (called when rename happens)
     // -----------------------------------------------------
+    private void OnElementalRenamed()
+    {
+        RefreshSlots();
+        if (selectedElem != null)
+            detailsPanel.Show(selectedElem);
+    }
+
     private void RefreshSlots()
     {
-        // Clear details panel
         detailsPanel.Show(null);
 
         List<Elemental> fly = player.GetFlyingList();
         List<Elemental> ground = player.GetGroundList();
 
-        // FLYING SLOTS
+        // FLYING
         for (int i = 0; i < flyingSlots.Length; i++)
         {
             if (i < fly.Count)
@@ -49,7 +66,7 @@ public class ElementalView : MonoBehaviour
                 flyingSlots[i].SetEmpty();
         }
 
-        // GROUND SLOTS
+        // GROUND
         for (int i = 0; i < groundSlots.Length; i++)
         {
             if (i < ground.Count)
@@ -63,7 +80,7 @@ public class ElementalView : MonoBehaviour
     {
         slot.SetElement(elem);
 
-        // Set icon
+        // icon
         var bodySR = elem.def.prefab.GetComponentInChildren<SpriteRenderer>();
         if (bodySR != null)
         {
@@ -71,7 +88,7 @@ public class ElementalView : MonoBehaviour
             slot.icon.color = bodySR.color;
         }
 
-        // Set outline (rarity overlay)
+        // outline
         var overlay = elem.transform.Find("RarityOverlay");
         if (overlay != null)
         {
@@ -83,12 +100,14 @@ public class ElementalView : MonoBehaviour
             }
         }
 
-        slot.nameText.text = $"{elem.def.type}";
+        // name
+        slot.nameText.text = elem.gameObject.name;
 
-        // Hook up click event
+        // click handler
         slot.button.onClick.RemoveAllListeners();
         slot.button.onClick.AddListener(() =>
         {
+            selectedElem = elem;
             detailsPanel.Show(elem);
         });
     }

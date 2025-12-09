@@ -35,6 +35,9 @@ public struct PlayerStats
 public class PlayerElementals : MonoBehaviour
 {
 
+    // Used to prevent typing issues while renaming
+    public ElementalView elementalView;
+
     public int maxElementals = 4;
     private int currElementals = 0;
 
@@ -65,6 +68,7 @@ public class PlayerElementals : MonoBehaviour
     }
     void Update()
     {
+        if (elementalView.isOpen == true) return;
         // R = spawn random elemental
         if (Input.GetKeyDown(KeyCode.R))
         {
