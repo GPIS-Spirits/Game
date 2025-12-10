@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [System.Serializable]
 public struct PlayerStats
@@ -59,8 +60,15 @@ public class PlayerElementals : MonoBehaviour
     public int baseEffect = 0;
     public int baseEnergy = 3;
 
+    public ElementalCollection collection;
+    public ElementalCollectionDisplay listView;
 
     public PlayerStats stats;
+    private void Awake()
+    {
+        collection = new ElementalCollection();
+    }
+
     private void Start()
     {
         stats = RefreshStats();
@@ -85,9 +93,10 @@ public class PlayerElementals : MonoBehaviour
     }
 
     // ----------------------------------------------------------------------
-    // SPAWN
+    // SPAWNING FUNCTIONS
     // ----------------------------------------------------------------------
 
+    // Used primarily for debugging
     public void SpawnElemental(Element element, Quality quality)
     {
         if (currElementals >= maxElementals)
@@ -112,13 +121,13 @@ public class PlayerElementals : MonoBehaviour
         ++currElementals;
         stats = RefreshStats();
         Debug.Log(stats);
+        if (collection != null)
+            collection.Add(elem);
+        if (listView != null)
+            listView.RefreshList();
     }
 
-
-    // ----------------------------------------------------------------------
-    // REMOVE RANDOM
-    // ----------------------------------------------------------------------
-
+    // Used primarily for debugging
     public void RemoveRandomElemental()
     {
         int total = flyingElementals.Count + groundElementals.Count;
@@ -144,9 +153,105 @@ public class PlayerElementals : MonoBehaviour
         CompactList(list, slots);
 
         stats = RefreshStats();
-        Debug.Log(stats);
+        Debug.Log(stats); 
+        if (collection != null)
+            collection.Remove(toRemove); 
+        if (listView != null)
+            listView.RefreshList();
     }
 
+    public void RemoveElementalByName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            return;
+
+        // Search flying list
+        for (int i = 0; i < flyingElementals.Count; i++)
+        {
+            if (flyingElementals[i] != null &&
+                flyingElementals[i].name == name)
+            {
+                var elem = flyingElementals[i];
+                flyingElementals.RemoveAt(i);
+                if (collection != null) collection?.Remove(elem);
+                if (listView != null) listView.RefreshList();
+                Destroy(elem.gameObject);
+                currElementals--;
+                CompactList(flyingElementals, flyingPositions);
+                stats = RefreshStats();
+                return;
+            }
+        }
+
+        // Search ground list
+        for (int i = 0; i < groundElementals.Count; i++)
+        {
+            if (groundElementals[i] != null &&
+                groundElementals[i].name == name)
+            {
+                var elem = groundElementals[i];
+                groundElementals.RemoveAt(i); 
+                if (collection != null) collection?.Remove(elem);
+                if (listView != null) listView.RefreshList();
+                Destroy(elem.gameObject);
+                currElementals--;
+                CompactList(groundElementals, groundPositions);
+                stats = RefreshStats();
+                return;
+            }
+        }
+
+        Debug.Log("No elemental found with name: " + name);
+    }
+
+    public Elemental SpawnFromCollection(Elemental sourceElem)
+    {
+        if (sourceElem == null)
+        {
+            Debug.LogError("SpawnFromCollection called with null Elemental.");
+            return null;
+        }
+
+        if (currElementals >= maxElementals)
+        {
+            Debug.Log("Too many elementals, not spawning.");
+            return null;
+        }
+
+        bool isGround = (sourceElem.def.type == Element.Earth);
+
+        List<Elemental> list = isGround ? groundElementals : flyingElementals;
+        Transform[] slots = isGround ? groundPositions : flyingPositions;
+
+        if (list.Count >= maxElementals)
+            return null;
+
+        int slotIndex = list.Count;
+
+        // Spawn using your existing spawner logic
+        Elemental newElem = spawner.Spawn(
+            sourceElem.def.type,
+            sourceElem.quality,
+            slots[slotIndex]
+        );
+
+        if (newElem == null)
+            return null;
+
+        newElem.hp = sourceElem.hp;
+        newElem.dmg = sourceElem.dmg;
+        newElem.armor = sourceElem.armor;
+        newElem.effectStrength = sourceElem.effectStrength;
+        newElem.resists = new List<Resist>(sourceElem.resists);
+
+        list.Add(newElem);
+        currElementals++;
+        stats = RefreshStats();
+
+        Debug.Log($"Spawned new Elemental from collection: {newElem.def.type} ({newElem.quality}) into slot {slotIndex}");
+
+        return newElem;
+    }
 
     // ----------------------------------------------------------------------
     // COMPACT LIST AND REPOSITION

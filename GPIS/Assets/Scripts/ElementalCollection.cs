@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ElementalCollection
 {
@@ -25,7 +26,7 @@ public class ElementalCollection
     };
 
     // ============================================================
-    // INTERNAL LIST + CONSTRUCTOR
+    // INTERNAL LIST
     // ============================================================
     private readonly List<Elemental> all = new();
 
@@ -39,7 +40,8 @@ public class ElementalCollection
     public void Add(Elemental elem)
     {
         if (elem == null) return;
-        all.Add(elem);
+        all.Add(elem); 
+        elem.OnRenamed += HandleRename;
         Sort();
     }
 
@@ -68,6 +70,48 @@ public class ElementalCollection
             int rarityB = QualityOrder[b.quality];
             return rarityA.CompareTo(rarityB);
         });
+    }
+
+    // ============================================================
+    // USED FOR DEBUGGING
+    // ============================================================
+    public Elemental AddRandomTestCopy()
+    {
+        if (all.Count == 0)
+            return null;
+
+        int randIndex = UnityEngine.Random.Range(0, all.Count);
+        Elemental src = all[randIndex];
+        if (src == null)
+            return null;
+
+        GameObject go = new GameObject($"{src.def.type}_{src.quality}_TEST");
+        Elemental clone = go.AddComponent<Elemental>();
+
+        clone.def = src.def;
+        clone.quality = src.quality;
+        clone.hp = src.hp;
+        clone.dmg = src.dmg;
+        clone.armor = src.armor;
+        clone.effectStrength = src.effectStrength;
+        clone.resists = new List<Resist>(src.resists);
+
+        string uid = System.Guid.NewGuid().ToString("N").Substring(0, 4);
+        clone.name = $"{clone.def.type}_{clone.quality}_TEST_{uid}";
+
+        all.Add(clone);
+        clone.OnRenamed += HandleRename;    
+
+        Sort();
+
+        Debug.Log($"[TEST] Spawned Elemental: {clone.def.type} ({clone.quality}) into collection index {all.IndexOf(clone)}");
+
+        return clone;
+    }
+
+    private void HandleRename(Elemental elem)
+    {
+        Sort();
     }
 
     public IReadOnlyList<Elemental> List => all;

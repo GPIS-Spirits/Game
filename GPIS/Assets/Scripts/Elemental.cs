@@ -21,6 +21,9 @@ public class Elemental : MonoBehaviour
     [Header("Resists (copied from def)")]
     public List<Resist> resists = new();
 
+
+    public event Action<Elemental> OnRenamed;
+
     /// <summary>
     /// Easy debugging of elementals
     /// </summary>
@@ -43,4 +46,8 @@ public class Elemental : MonoBehaviour
         }
     }
 
+    public void NotifyRenamed()
+    {
+        OnRenamed?.Invoke(this);
+    }
 }
