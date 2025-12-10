@@ -114,3 +114,4 @@ public struct Resist
     [Range(-100,100)]
     public int percent;
 }
+
