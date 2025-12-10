@@ -7,7 +7,7 @@ public class menuManager : MonoBehaviour
 {
     public void onPlay()
     {
-        SceneManager.LoadSceneAsync("dungeonLoop");
+        SceneManager.LoadSceneAsync("town");
     }
 
     public void onCredits()
