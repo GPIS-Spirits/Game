@@ -26,6 +26,14 @@ public class DungeonHandler : MonoBehaviour
 
     [Header("Player Marker")]
     public Transform playerMarker;
+
+    [SerializeField] private Transform[] flipTargets;
+    [SerializeField] private float turnSpinDuration = 0.15f;
+    private float _facing = +1f;
+    private bool _isTurning = false;
+    private Coroutine _turnRoutine;
+    private Vector3[] _flipBaseScales;
+
     [Min(0)] public int startIndex = 0;
 
     [Header("Jump Settings")]
@@ -39,9 +47,12 @@ public class DungeonHandler : MonoBehaviour
     private Vector3 _baseScale = Vector3.one;
 
 
+    // This is used to prevent a/d movement
+    public ElementalView elementalView;
+    
     /// <summary>
     /// Holds all the per-tile data
-    /// Positiion, Tile Definition, Visited bool
+    /// Position, Tile Definition, Visited bool
     /// </summary>
     private class TileInstance
     {
@@ -55,10 +66,16 @@ public class DungeonHandler : MonoBehaviour
         if (playerMarker != null)
             _baseScale = playerMarker.localScale;
 
-        GenerateTiles();
-        SnapPlayerTo(startIndex);   // start without animation
+        if (flipTargets != null && flipTargets.Length > 0)
+        {
+            _flipBaseScales = new Vector3[flipTargets.Length];
+            for (int i = 0; i < flipTargets.Length; i++)
+                _flipBaseScales[i] = flipTargets[i] != null ? flipTargets[i].localScale : Vector3.one;
+        }
 
-        // Runs Start Tile Logic if =>
+        GenerateTiles();
+        SnapPlayerTo(startIndex);
+
         if (doStartTileLogic)
         {
             SnapPlayerTo(startIndex);
@@ -69,18 +86,14 @@ public class DungeonHandler : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Temporary Movement for our Dungeon, A-D or L-R
-    /// </summary>
     private void Update()
     {
-        // Locks movement during animations
-        if (_isJumping) return;
+        if (elementalView.isOpen == true) return;
 
-        // Checks D and R arrow key to move right
+        if (_isJumping || _isTurning) return;
+
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             TryMove(+1);
-        // Checks A and L arrow key to move Left
         else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             TryMove(-1);
     }
@@ -106,32 +119,20 @@ public class DungeonHandler : MonoBehaviour
             bool isLast = (i == tileCount - 1);
 
             if (isFirst && startTileDef != null)
-            {
-                // First tile (isFirst)
                 def = startTileDef;
-            }
             else if (isLast && goalTileDef != null)
-            {
-                // Last tile (isLast)
                 def = goalTileDef;
-            }
             else
-            {
-                // Picks a random tile. We can do weights later.
                 def = middleTileDef[Random.Range(0, middleTileDef.Length)];
-            }
 
-            // Creates GO at adjusted position
             Vector3 worldPos = transform.position + new Vector3(i * tileSpacing, 0f, 0f);
             GameObject tileGO = Instantiate(tilePrefab, worldPos, Quaternion.identity, transform);
 
-            // Sets sprite (background) and overlay (foreground, event) images
             var view = tileGO.GetComponent<TileView>();
             if (view != null)
             {
                 if (view.baseRenderer != null)
                     view.baseRenderer.sprite = def.sprite;
-
                 if (view.overlayRenderer != null)
                     view.overlayRenderer.sprite = def.overlay;
             }
@@ -140,7 +141,6 @@ public class DungeonHandler : MonoBehaviour
                 ? $"Tile_{i:00}"
                 : $"{i:00}_{def.displayName}";
 
-            // Adds the tile instance
             _tiles.Add(new TileInstance
             {
                 def = def,
@@ -152,7 +152,6 @@ public class DungeonHandler : MonoBehaviour
         _currentIndex = Mathf.Clamp(_currentIndex, 0, _tiles.Count - 1);
     }
 
-
     /// <summary>
     /// Attempts to move || will not move if already moving
     /// </summary>
@@ -163,13 +162,66 @@ public class DungeonHandler : MonoBehaviour
         int newIndex = Mathf.Clamp(_currentIndex + delta, 0, _tiles.Count - 1);
         if (newIndex == _currentIndex) return;
 
+        float desiredFacing = Mathf.Sign(delta);
+
+        // Turning takes priority before movement
+        if (desiredFacing != _facing)
+        {
+            if (_turnRoutine != null)
+                StopCoroutine(_turnRoutine);
+
+            _turnRoutine = StartCoroutine(TurnPlayer(desiredFacing, newIndex));
+            return;
+        }
+
         StartCoroutine(JumpMove(newIndex, delta));
     }
 
     /// <summary>
-    /// Controls player jump movement to next tile, or specified tile
+    /// Spins flip targets 180 degrees on Y-axis before movement
     /// </summary>
-    /// <returns></returns>
+    private IEnumerator TurnPlayer(float desiredFacing, int nextIndex)
+    {
+        _isTurning = true;
+
+        Quaternion[] startRots = new Quaternion[flipTargets.Length];
+        Quaternion[] endRots = new Quaternion[flipTargets.Length];
+
+        for (int i = 0; i < flipTargets.Length; i++)
+        {
+            Transform tx = flipTargets[i];
+            if (tx == null) continue;
+
+            startRots[i] = tx.rotation;
+
+            float yRot = desiredFacing > 0 ? 0f : 180f;
+            endRots[i] = Quaternion.Euler(0f, yRot, 0f);
+        }
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / turnSpinDuration;
+
+            for (int i = 0; i < flipTargets.Length; i++)
+            {
+                Transform tr = flipTargets[i];
+                if (tr == null) continue;
+                tr.rotation = Quaternion.Slerp(startRots[i], endRots[i], t);
+            }
+
+            yield return null;
+        }
+
+        _facing = desiredFacing;
+        _isTurning = false;
+
+        StartCoroutine(JumpMove(nextIndex, (int)desiredFacing));
+    }
+
+    /// <summary>
+    /// Controls player jump movement to next tile, with spin animations
+    /// </summary>
     private IEnumerator JumpMove(int newIndex, int direction)
     {
         _isJumping = true;
@@ -178,69 +230,89 @@ public class DungeonHandler : MonoBehaviour
         Vector3 targetBase = _tiles[newIndex].transform.position;
         Vector3 end = targetBase + Vector3.up * idleYOffset;
 
-        // Flips to face direction of movement
+        // Force player Z
+        start.z = -5f;
+        end.z = -5f;
+
+        Transform[] spinSet = flipTargets;
+        Quaternion[] startRots = new Quaternion[spinSet.Length];
+
+        for (int i = 0; i < spinSet.Length; i++)
+            startRots[i] = spinSet[i] != null ? spinSet[i].rotation : Quaternion.identity;
+
         float sign = Mathf.Sign(direction);
-        playerMarker.localScale = new Vector3(
-            Mathf.Abs(_baseScale.x) * sign,
-            _baseScale.y,
-            _baseScale.z
-        );
-
-        float t = 0f;
-
-        Quaternion startRot = playerMarker.rotation;
-        
-        // Determines front or backflips
+        float tLerp = 0f;
         float spinDir = -1f * sign;
 
-        while (t < 1f)
+        while (tLerp < 1f)
         {
-            t += Time.deltaTime / jumpDuration;
-            float clampedT = Mathf.Clamp01(t);
+            tLerp += Time.deltaTime / jumpDuration;
+            float clampedT = Mathf.Clamp01(tLerp);
 
-            // Jump Arc
             Vector3 pos = Vector3.Lerp(start, end, clampedT);
             float arc = 4f * clampedT * (1f - clampedT);
             pos.y += arc * jumpHeight;
+            pos.z = -5f;
+
             playerMarker.position = pos;
 
-            // Basically a Lerp, for the spin.
-            float angle = 360f * clampedT * (spinDir);
-            playerMarker.rotation = startRot * Quaternion.Euler(0f, 0f, angle);
+            float angle = 360f * clampedT;
+            Quaternion dRot = Quaternion.Euler(0f, 0f, angle * -1);
+
+            for (int i = 0; i < spinSet.Length; i++)
+            {
+                Transform tr = spinSet[i];
+                if (tr == null) continue;
+
+                tr.rotation = startRots[i] * dRot;
+            }
 
             yield return null;
         }
 
-        // Ends by snapping; just in case.
+        // Snap end
         _currentIndex = newIndex;
-        playerMarker.position = end;
-        playerMarker.rotation = startRot;
+        Vector3 finalPos = end;
+        finalPos.z = -5f;
+        playerMarker.position = finalPos;
+
+        // Reset spin targets while preserving facing
+        for (int i = 0; i < spinSet.Length; i++)
+        {
+            Transform tr = spinSet[i];
+            if (tr == null) continue;
+
+            Vector3 e = tr.eulerAngles;
+            tr.rotation = Quaternion.Euler(0f, e.y, 0f);
+        }
+
         _isJumping = false;
 
-        // onLand() called and tile event triggers, sets to visited [single visit]
         var tile = _tiles[_currentIndex];
-
         if (!tile.visited)
         {
             tile.visited = true;
-
             if (tile.def is IDungeonTileOnLand onLand)
                 onLand.OnLand(this, _currentIndex);
         }
     }
 
-    // Snap, used in start; can be used to Teleport later
+    /// <summary>
+    /// Snaps player to tile location (no animation)
+    /// </summary>
     private void SnapPlayerTo(int index)
     {
         if (_tiles.Count == 0 || playerMarker == null) return;
 
-        // Ensures no out of ranges
         index = Mathf.Clamp(index, 0, _tiles.Count - 1);
         _currentIndex = index;
 
-        // Sets position
         Vector3 basePos = _tiles[index].transform.position;
-        playerMarker.position = basePos + Vector3.up * idleYOffset;
+        Vector3 pos = basePos + Vector3.up * idleYOffset;
+
+        pos.z = -5f;
+
+        playerMarker.position = pos;
     }
 
     private void ClearExistingTiles()
@@ -248,15 +320,14 @@ public class DungeonHandler : MonoBehaviour
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             var child = transform.GetChild(i);
-            // Unity idiom || Destroys in editor if it's in editor mode via immediate
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (!Application.isPlaying)
                 DestroyImmediate(child.gameObject);
             else
                 Destroy(child.gameObject);
-        #else
+#else
             Destroy(child.gameObject);
-        #endif
+#endif
         }
     }
 }

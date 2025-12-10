@@ -1,135 +1,154 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-[AddComponentMenu("Spawners/Elemental Spawner (Slots Only)")]
 public class ElementalSpawner : MonoBehaviour
 {
-    [Header("Elemental Sources")]
-    public List<ElementalDef> candidates = new();
+    [Header("All Elemental Definitions")]
+    public ElementalDef[] defs;
 
-    [Header("Slots (order = element0..element3)")]
-    public Transform[] flyingSlots; // Slot_001..Slot_004 (air)
-    public Transform[] groundSlots; // Slot_001..Slot_004 (ground)
+    [Header("Quality Roller")]
+    public QualityRoller qualityRoller;
 
-    [Header("Limits")]
-    [Min(0)] public int initialSpawn = 0;
-    [Min(1)] public int maxAlive = 4;
+    [Header("Rarity Multipliers")]
+    public float commonMult = 1.0f;
+    public float uncommonMult = 1.15f;
+    public float rareMult = 1.30f;
+    public float epicMult = 1.65f;
+    public float legendaryMult = 2.0f;
 
-    [Header("Placement")]
-    public bool snapToSlotLocalZero = true;
+    // =====================================================================
+    // RANDOM ACCESSORS (called externally if desired)
+    // =====================================================================
 
-    // runtime
-    private readonly List<Elemental> _alive = new();
-    private int _nextFly = 0;
-    private int _nextGround = 0;
-
-    public IReadOnlyList<Elemental> Alive => _alive;
-
-    void Start()
+    public Element GetRandomElement()
     {
-        if (initialSpawn > 0) SpawnInitial();
-    }
-
-    [ContextMenu("Spawn Initial")]
-    public void SpawnInitial()
-    {
-        if (candidates == null || candidates.Count == 0) return;
-        int target = Mathf.Clamp(initialSpawn, 0, maxAlive);
-        int guard = 64;
-
-        while (_alive.Count < target && guard-- > 0)
+        if (defs == null || defs.Length == 0)
         {
-            var def = candidates[Random.Range(0, candidates.Count)];
-            if (def == null) continue;
-            if (Spawn(def) == null) continue;
-        }
-    }
-
-    [ContextMenu("Spawn Random")]
-    public void SpawnRandom()
-    {
-        if (candidates == null || candidates.Count == 0) return;
-        var def = candidates[Random.Range(0, candidates.Count)];
-        Spawn(def);
-    }
-
-    public Elemental Spawn(ElementalDef def)
-    {
-        if (def == null) return null;
-        PruneNulls();
-        if (_alive.Count >= maxAlive) return null;
-
-        bool isEarth = def.type == Element.Earth;
-        var slots = isEarth ? groundSlots : flyingSlots;
-        if (slots == null || slots.Length == 0) return null;
-
-        // find next free slot in sequence, wrap, skip occupied
-        int start = isEarth ? _nextGround : _nextFly;
-        Transform slot = null;
-
-        for (int i = 0; i < slots.Length; i++)
-        {
-            int idx = (start + i) % slots.Length;
-            var s = slots[idx];
-            if (!s) continue;
-
-            // one occupant per slot: childCount==0 means free
-            if (s.childCount == 0)
-            {
-                slot = s;
-                if (isEarth) _nextGround = (idx + 1) % slots.Length;
-                else _nextFly = (idx + 1) % slots.Length;
-                break;
-            }
-        }
-        if (slot == null) return null;
-
-        // instantiate as child of the slot
-        var go = ElementalFactory.Spawn(def, slot.position, slot.rotation, slot);
-        if (!go) return null;
-
-        if (snapToSlotLocalZero)
-        {
-            var tr = go.transform;
-            tr.localPosition = Vector3.zero;
-            tr.localRotation = Quaternion.identity;
+            Debug.LogError("No ElementalDefs assigned to ElementalSpawner.");
+            return Element.Fire;
         }
 
-        var inst = go.GetComponent<Elemental>();
-        if (!inst) return null;
-
-        _alive.Add(inst);
-        return inst;
+        int idx = Random.Range(0, defs.Length);
+        return defs[idx].type;
     }
 
-    public void Despawn(Elemental inst)
+    public Quality GetRandomQuality()
     {
-        if (!inst) return;
-        _alive.Remove(inst);
-        Destroy(inst.gameObject);
+        return qualityRoller.Roll();
     }
 
-    public void DespawnAll()
-    {
-        for (int i = 0; i < _alive.Count; i++)
-            if (_alive[i]) Destroy(_alive[i].gameObject);
-        _alive.Clear();
-    }
+    // =====================================================================
+    // SINGLE SPAWN FUNCTION
+    // =====================================================================
 
-    public void SetMaxAlive(int newMax)
+    /// <summary>
+    /// Spawns a specific Element + Quality at a Transform.
+    /// Randomness happens externally if desired.
+    /// </summary>
+    public Elemental Spawn(Element element, Quality quality, Transform location)
     {
-        maxAlive = Mathf.Max(1, newMax);
-        PruneNulls();
-        while (_alive.Count > maxAlive)
+        ElementalDef def = GetDef(element);
+        if (def == null)
         {
-            var last = _alive[_alive.Count - 1];
-            Despawn(last);
+            Debug.LogError($"No ElementalDef found for element type {element}");
+            return null;
         }
+
+        // Parent the spawned elemental to the slot transform
+        GameObject inst = Instantiate(def.prefab, location.position, location.rotation, location);
+
+        Elemental e = inst.GetComponent<Elemental>();
+        if (e == null)
+        {
+            Debug.LogError($"Prefab for element {element} does not contain an Elemental component.");
+            return null;
+        }
+
+        // Assign data
+        e.def = def;
+        e.quality = quality;
+
+        // Rename for clarity
+        string uid = System.Guid.NewGuid().ToString("N").Substring(0, 4);
+        inst.name = $"{element}_{quality}_{uid}";
+
+        // Base stats
+        e.hp = def.baseHP;
+        e.dmg = def.baseDmg;
+        e.armor = def.baseArmor;
+        e.effectStrength = def.effectStrength;
+        e.resists = new System.Collections.Generic.List<Resist>(def.resists);
+
+        // Apply rarity scaling
+        float mult = GetMultiplier(quality);
+        MultiplyAllStats(e, mult);
+
+        // Set color for Overlay
+        ApplyRarityColor(inst, quality);
+        return e;
     }
 
-    private void PruneNulls()
+
+    // =====================================================================
+    // INTERNAL HELPERS
+    // =====================================================================
+
+    private ElementalDef GetDef(Element type)
     {
-        for (int i = _alive.Count - 1; i >= 0; --i)
-            if (!_alive[i]) _alive.RemoveAt(i);
+        foreach (var d in defs)
+            if (d.type == type)
+                return d;
+        return null;
     }
+
+    private int MultiplyStat(int stat, float mult)
+    {
+        return Mathf.RoundToInt(stat * mult);
+    }
+
+    private void MultiplyAllStats(Elemental e, float mult)
+    {
+        e.hp = MultiplyStat(e.hp, mult);
+        e.dmg = MultiplyStat(e.dmg, mult);
+        e.armor = MultiplyStat(e.armor, mult);
+        e.effectStrength = MultiplyStat(e.effectStrength, mult);
+    }
+
+    private float GetMultiplier(Quality q)
+    {
+        switch (q)
+        {
+            case Quality.Common: return commonMult;
+            case Quality.Uncommon: return uncommonMult;
+            case Quality.Rare: return rareMult;
+            case Quality.Epic: return epicMult;
+            case Quality.Legendary: return legendaryMult;
+        }
+        return 1f;
+    }
+
+    private Color GetRarityColor(Quality q)
+    {
+        switch (q)
+        {
+            case Quality.Common: return new Color(0.75f, 0.75f, 0.75f);         // Silver
+            case Quality.Uncommon: return new Color(0.6f, 1.0f, 0.6f);          // Light Green
+            case Quality.Rare: return new Color(0.4f, 0.6f, 1.0f);              // Blue
+            case Quality.Epic: return new Color(0.65f, 0.3f, 0.9f);             // Purple
+            case Quality.Legendary: return new Color(1.0f, 0.35f, 0.35f);       // Red
+        }
+        return Color.white;
+    }
+    private void ApplyRarityColor(GameObject inst, Quality quality)
+    {
+        Transform overlay = inst.transform.Find("RarityOverlay");
+        if (overlay == null)
+            return;
+
+        SpriteRenderer sr = overlay.GetComponent<SpriteRenderer>();
+        if (sr == null)
+            return;
+
+        sr.color = GetRarityColor(quality);
+    }
+
 }

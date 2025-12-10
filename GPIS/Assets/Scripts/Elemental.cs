@@ -21,6 +21,9 @@ public class Elemental : MonoBehaviour
     [Header("Resists (copied from def)")]
     public List<Resist> resists = new();
 
+
+    public event Action<Elemental> OnRenamed;
+
     /// <summary>
     /// Easy debugging of elementals
     /// </summary>
@@ -29,5 +32,22 @@ public class Elemental : MonoBehaviour
     {
         var name = def != null ? def.npcName : "Elemental";
         return $"{name} [{quality}] HP:{hp} DMG:{dmg} ARM:{armor} FX:{effectStrength}";
+    }
+
+    void Awake()
+    {
+        var body = GetComponentInChildren<SpriteRenderer>();
+        var overlay = transform.Find("RarityOverlay").GetComponent<SpriteRenderer>();
+
+        if (body != null && overlay != null)
+        {
+            overlay.sortingLayerID = body.sortingLayerID;
+            overlay.sortingOrder = body.sortingOrder - 1;
+        }
+    }
+
+    public void NotifyRenamed()
+    {
+        OnRenamed?.Invoke(this);
     }
 }
