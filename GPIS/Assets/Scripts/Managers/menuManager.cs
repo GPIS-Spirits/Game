@@ -7,22 +7,33 @@ public class menuManager : MonoBehaviour
 {
     public void onPlay()
     {
-        SceneManager.LoadSceneAsync("town");
+        SaveScene("town");
+        SceneManager.LoadScene("town");
     }
 
     public void onCredits()
     {
-        SceneManager.LoadSceneAsync("Credits");
+        SaveScene("Credits");
+        SceneManager.LoadScene("Credits");
     }
 
     public void onQuit()
     {
+        // Save that we quit from this scene
+        SaveScene(SceneManager.GetActiveScene().name);
+
         Application.Quit();
     }
 
     public void onMenu()
     {
-        SceneManager.LoadSceneAsync("mainMenu");
+        SaveScene("mainMenu");
+        SceneManager.LoadScene("mainMenu");
     }
 
+    private void SaveScene(string sceneName)
+    {
+        PlayerPrefs.SetString("LastScene", sceneName);
+        PlayerPrefs.Save();
+    }
 }
