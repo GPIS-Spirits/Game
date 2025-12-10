@@ -19,9 +19,7 @@ public class menuManager : MonoBehaviour
 
     public void onQuit()
     {
-        // Save that we quit from this scene
         SaveScene(SceneManager.GetActiveScene().name);
-
         Application.Quit();
     }
 
