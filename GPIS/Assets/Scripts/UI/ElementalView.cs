@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ElementalView : MonoBehaviour
 {
@@ -15,9 +16,14 @@ public class ElementalView : MonoBehaviour
     private Elemental selectedElem;
     public bool isOpen = false;
 
+    [Header("Player Total Stats UI")]
+    public TMPro.TMP_Text statsText;
+    public TMPro.TMP_Text resistText;
+
     private void Start()
     {
         detailsPanel.OnRenamed += OnElementalRenamed;
+        RefreshTotalStats();
     }
 
     private void Update()
@@ -36,8 +42,11 @@ public class ElementalView : MonoBehaviour
 
         detailsPanel.Show(null);
 
-        if (isOpen)
+        if (isOpen) 
+        {
             RefreshSlots();
+            RefreshTotalStats();
+        }
     }
 
     // -----------------------------------------------------
@@ -48,6 +57,7 @@ public class ElementalView : MonoBehaviour
         RefreshSlots();
         if (selectedElem != null)
             detailsPanel.Show(selectedElem);
+        RefreshTotalStats();
     }
 
     private void RefreshSlots()
@@ -74,6 +84,8 @@ public class ElementalView : MonoBehaviour
             else
                 groundSlots[i].SetEmpty();
         }
+
+        RefreshTotalStats();
     }
 
     private void PopulateSlot(ElementalSlotUI slot, Elemental elem)
@@ -111,4 +123,44 @@ public class ElementalView : MonoBehaviour
             detailsPanel.Show(elem);
         });
     }
+
+    private void RefreshTotalStats()
+    {
+        if (player == null)
+            return;
+
+        PlayerStats s = player.stats;
+
+        // Stats
+        if (statsText != null)
+        {
+            statsText.text =
+                "HP: " + s.totalHP + "\n" +
+                "Armor: " + s.totalArmor + "\n" +
+                "Damage: " + s.totalDmg + "\n" +
+                "Effect: " + s.totalEffect + "\n" +
+                "Energy: " + s.totalEnergy;
+        }
+        
+
+        // Resists
+        if (resistText != null)
+        {
+            if (s.resists == null || s.resists.Count == 0)
+            {
+                resistText.text = "No Resistances";
+            }
+            else
+            {
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+                foreach (var kvp in s.resists)
+                    sb.AppendLine(kvp.Key + ": " + kvp.Value + "%");
+
+                resistText.text = sb.ToString();
+            }
+        }
+    }
+
+
 }

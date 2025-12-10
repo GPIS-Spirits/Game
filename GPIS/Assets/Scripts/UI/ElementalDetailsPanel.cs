@@ -20,6 +20,7 @@ public class ElementalDetailsPanel : MonoBehaviour
     public Action OnRenamed;
 
     public Elemental currentElem;
+    public ElementalCollectionDisplay listView;
 
     public void Show(Elemental elem)
     {
@@ -118,8 +119,9 @@ public class ElementalDetailsPanel : MonoBehaviour
 
         renameInput.gameObject.SetActive(false);
 
-        // Let ElementalView handle the UI refresh + re-show
         OnRenamed?.Invoke();
+        currentElem.NotifyRenamed();
+        listView.RefreshList();
     }
     public void GetName()
     {
